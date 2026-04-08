@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>诸神之路 · Path of the Gods</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202124;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* Top bar */
+.topbar{background:#fff;padding:16px 24px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #e0e0e0;position:sticky;top:0;z-index:1001}
+.topbar-back{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s;flex-shrink:0}
+.topbar-back:hover{background:#f1f3f4}
+.topbar-back svg{width:20px;height:20px;fill:#5f6368}
+.topbar-title{font-size:18px;font-weight:500;color:#202124;flex:1}
+.topbar-meta{font-size:13px;color:#5f6368}
+
+/* Content */
+.content{max-width:800px;margin:0 auto;padding:16px}
+
+/* Map */
+#trail-map{width:100%;height:420px;border-radius:12px;border:1px solid #e0e0e0;margin-bottom:12px;z-index:1}
+.leaflet-popup-content{font-family:'Google Sans','Roboto',sans-serif;font-size:13px;line-height:1.5;color:#202124}
+.leaflet-popup-content strong{font-weight:600}
+.leaflet-popup-content .pop-sub{color:#5f6368;font-size:12px}
+
+/* Cards */
+.card{background:#fff;border-radius:12px;border:1px solid #e0e0e0;margin-bottom:12px;overflow:hidden}
+.card-header{padding:14px 20px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;background:#f8f9fa;border-bottom:1px solid #eee;transition:background .1s}
+.card-header:hover{background:#f1f3f4}
+.card-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.card-icon svg{width:18px;height:18px}
+.card-info{flex:1}
+.card-label{font-size:15px;font-weight:600;color:#202124}
+.card-sub{font-size:13px;color:#5f6368;margin-top:1px}
+.card-chevron{transition:transform .2s;color:#9aa0a6;font-size:14px}
+.card.open .card-chevron{transform:rotate(180deg)}
+.card-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.card.open .card-body{max-height:5000px}
+.card-content{padding:16px 20px}
+
+/* Steps */
+.step{display:flex;gap:14px;padding:12px 0;position:relative}
+.step+.step{border-top:1px solid #f1f3f4}
+.step-marker{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:28px}
+.step-num{width:28px;height:28px;border-radius:50%;background:#1a73e8;color:#fff;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center}
+.step-num.green{background:#34a853}
+.step-num.orange{background:#f9ab00}
+.step-num.red{background:#ea4335}
+.step-line{flex:1;width:2px;background:#e0e0e0;margin-top:6px}
+.step-body{flex:1;min-width:0}
+.step-title{font-size:14px;font-weight:600;color:#202124}
+.step-desc{font-size:13px;color:#5f6368;margin-top:2px;line-height:1.5}
+.step-desc strong{font-weight:500;color:#202124}
+
+/* Highlight box */
+.hl-box{background:#e8f0fe;border-radius:8px;padding:12px 16px;margin:8px 0;font-size:13px;color:#174ea6;line-height:1.6}
+.hl-box.warn{background:#fef7e0;color:#b06000}
+.hl-box.success{background:#e6f4ea;color:#137333}
+
+/* Info row */
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:8px 0}
+.info-item{background:#f8f9fa;border-radius:8px;padding:10px 14px}
+.info-label{font-size:11px;font-weight:500;color:#5f6368;text-transform:uppercase;letter-spacing:.5px}
+.info-val{font-size:15px;font-weight:600;color:#202124;margin-top:2px}
+.info-val .unit{font-size:12px;font-weight:400;color:#5f6368}
+
+/* Table */
+.g-table{width:100%;border-collapse:collapse;font-size:14px}
+.g-table th{text-align:left;padding:10px 12px;font-weight:500;color:#5f6368;font-size:12px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid #e0e0e0;white-space:nowrap}
+.g-table td{text-align:left;padding:10px 12px;border-bottom:1px solid #e0e0e0;color:#111;line-height:1.5}
+.g-table tr:last-child td{border-bottom:none}
+.g-table tr:hover td{background:#f8f9fa}
+.g-table th:first-child,.g-table td:first-child{padding-left:0}
+
+/* Chip */
+.chip{display:inline-block;padding:2px 8px;border-radius:100px;font-size:12px;font-weight:500}
+.chip-blue{background:#e8f0fe;color:#1a73e8}
+.chip-green{background:#e6f4ea;color:#137333}
+.chip-yellow{background:#fef7e0;color:#b06000}
+.chip-red{background:#fce8e6;color:#c5221f}
+
+/* Callout */
+.callout{padding:12px 0 0;margin:8px 0 0;border-top:1px solid #e0e0e0;font-size:13px;color:#9aa0a6;line-height:1.6}
+.callout strong{font-weight:500;color:#9aa0a6}
+
+/* Photo placeholder */
+.trail-photo{width:100%;border-radius:8px;overflow:hidden;margin:8px 0;background:#e8eaed;display:flex;align-items:center;justify-content:center;min-height:120px}
+
+/* Footer */
+.footer{text-align:center;padding:32px 24px;font-size:12px;color:#9aa0a6}
+.footer a{color:#1a73e8;text-decoration:none}
+
+@media(max-width:640px){
+  .content{padding:12px}
+  .topbar{padding:12px 16px}
+  .topbar-meta{display:none}
+  #trail-map{height:320px;border-radius:8px}
+  .info-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="topbar">
+  <div class="topbar-back" onclick="window.location.href='index.html'" title="返回行程">
+    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+  </div>
+  <div class="topbar-title">诸神之路 Sentiero degli Dei</div>
+  <div class="topbar-meta">DAY 7 · 4/29</div>
+</div>
+
+<div class="content">
+
+<!-- ===== 路线概览 ===== -->
+<div style="margin-bottom:16px">
+  <div style="font-size:20px;font-weight:700;color:#202124;margin-bottom:4px">Bomerano → Nocelle</div>
+  <div style="font-size:13px;color:#9aa0a6;line-height:1.6">7.8km · 3-4h · 海拔 638m → 443m · 累计爬升 ~200m · 下降 ~400m</div>
+</div>
+
+<!-- ===== 交互式地图 ===== -->
+<div id="trail-map"></div>
+<div style="font-size:12px;color:#9aa0a6;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center">
+  <span>绿色=起点 · 红色=终点 · 蓝色=途经 · 黄色=观景台</span>
+  <a href="https://www.google.com/maps/dir/Sorrento,+Italy/Bomerano,+Agerola,+Italy/Nocelle,+Positano,+Italy/Positano,+Italy/" target="_blank" style="color:#1a73e8;text-decoration:none;font-size:12px">Google Maps 打开 →</a>
+</div>
+
+<!-- ===== 去程交通 ===== -->
+<div class="card open">
+  <div class="card-header" onclick="this.parentElement.classList.toggle('open')">
+    <div class="card-icon" style="background:#e8f0fe">
+      <svg viewBox="0 0 24 24" fill="#1a73e8"><path d="M4 16c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm9 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm1.5-6H6V6h12v5z"/></svg>
+    </div>
+    <div class="card-info">
+      <div class="card-label">去程：索伦托 → Bomerano 起点</div>
+      <div class="card-sub">渡轮 + 巴士 | 约 1h10min</div>
+    </div>
+    <div class="card-chevron">▾</div>
+  </div>
+  <div class="card-body"><div class="card-content">
+
+    <div class="step">
+      <div class="step-marker"><div class="step-num">1</div></div>
+      <div class="step-body">
+        <div class="step-title">索伦托码头 → 阿马尔菲码头</div>
+        <div class="step-desc">
+          在索伦托 Marina Piccola 码头乘坐 <strong>渡轮</strong> 前往阿马尔菲<br>
+          <span style="color:#9aa0a6">TravelMar / NLG 运营 | 约 40 分钟</span><br>
+          <span style="color:#9aa0a6">票价约 €12-15/人 | 沿途看海岸线风景很棒</span><br>
+          <span style="color:#9aa0a6">首班约 7:30-8:00 | 建议提前在官网或码头购票</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-marker"><div class="step-num">2</div></div>
+      <div class="step-body">
+        <div class="step-title">阿马尔菲 → Agerola (Bomerano)</div>
+        <div class="step-desc">
+          从阿马尔菲码头步行到巴士站（约 5 分钟），换乘 <strong>SITA 5070 线</strong> 上山<br>
+          <span style="color:#9aa0a6">车程约 25 分钟 | 票价 €1.30</span><br>
+          <span style="color:#9aa0a6">在 Bomerano (Piazza Capasso) 下车</span><br>
+          <span style="color:#9aa0a6">下车后沿指示牌步行 2 分钟到徒步起点</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">建议清晨 7:00-8:00 出发，避开正午暴晒。渡轮票在 TravelMar/NLG 官网或码头窗口买，巴士票在阿马尔菲烟草店（Tabacchi）或 UnicoCampania App 买，上车记得打票。备选：出租车直达 Bomerano 约 45-60min，€70-90（3人摊 €25/人），酒店前台可预约。</div>
+
+  </div></div>
+</div>
+
+<!-- ===== 路线详解 ===== -->
+<div class="card open">
+  <div class="card-header" onclick="this.parentElement.classList.toggle('open')">
+    <div class="card-icon" style="background:#e6f4ea">
+      <svg viewBox="0 0 24 24" fill="#34a853"><path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7z"/></svg>
+    </div>
+    <div class="card-info">
+      <div class="card-label">徒步路线详解</div>
+      <div class="card-sub">Bomerano → Colle Serra → Nocelle | 7.8km</div>
+    </div>
+    <div class="card-chevron">▾</div>
+  </div>
+  <div class="card-body"><div class="card-content">
+
+    <div class="step">
+      <div class="step-marker"><div class="step-num green">1</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">起点：Bomerano (Piazza Capasso)</div>
+        <div class="step-desc">
+          <strong>海拔 638m</strong> | 广场有洗手间和小卖部，出发前补给饮水<br>
+          沿着 <strong>CAI 327</strong> 标志的石阶出发，指示牌写着 "Sentiero degli Dei"<br>
+          <span style="color:#9aa0a6">这里是最经典的西→东方向，整体下坡为主</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-marker"><div class="step-num">2</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">穿过 Bomerano 村庄</div>
+        <div class="step-desc">
+          前 1km 穿过村庄的石板巷，经过柠檬园和小教堂<br>
+          <span style="color:#9aa0a6">路面平整 · 有明确路标 · 约 15 分钟</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-marker"><div class="step-num">3</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">山脊步道 · 第一个观景平台</div>
+        <div class="step-desc">
+          进入山脊步道后，视野豁然开朗<br>
+          <strong>第一个观景平台</strong>可俯瞰整个阿马尔菲海岸线<br>
+          能看到 Praiano、卡普里岛的轮廓<br>
+          <span style="color:#9aa0a6">约步行 2km 处 · 海拔约 580m · 拍照绝佳点</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-marker"><div class="step-num orange">4</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Grotta Biscotto（饼干洞）</div>
+        <div class="step-desc">
+          一个巨大的天然岩洞，曾是牧羊人的避难所<br>
+          洞内凉爽，是绝佳的休息点<br>
+          <span style="color:#9aa0a6">约步行 3km 处 · 路线中段</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-marker"><div class="step-num">5</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">悬崖步道 · 最精华段</div>
+        <div class="step-desc">
+          <strong>这是路线中最震撼的一段</strong> — 步道沿悬崖边蜿蜒<br>
+          左侧是 500m 垂直落差的悬崖，脚下是湛蓝的地中海<br>
+          天气好时可以清楚看到卡普里岛和 Faraglioni 海蚀柱<br>
+          <span style="color:#9aa0a6">部分路段较窄 · 有恐高者量力而行 · 全程有护栏或石墙</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-marker"><div class="step-num">6</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Colle Serra 山口</div>
+        <div class="step-desc">
+          路线的最高点之一，可以 360° 环顾<br>
+          能同时看到阿马尔菲海岸和内陆山谷<br>
+          <span style="color:#9aa0a6">约步行 5.5km 处 · 海拔约 580m</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-marker"><div class="step-num">7</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">下山段 · 石阶路</div>
+        <div class="step-desc">
+          从 Colle Serra 开始明显下坡，走石阶路下降<br>
+          波西塔诺的彩色房子逐渐出现在视野中<br>
+          <span style="color:#9aa0a6">膝盖不好的建议带登山杖 · 下降约 150m</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-marker"><div class="step-num red">8</div></div>
+      <div class="step-body">
+        <div class="step-title">终点：Nocelle 村</div>
+        <div class="step-desc">
+          <strong>海拔 443m</strong> | 安静的小山村，俯瞰整个波西塔诺<br>
+          村里有几家小餐厅，推荐在这里喝杯冰柠檬水或吃午餐<br>
+          <span style="color:#9aa0a6">Trattoria Santa Croce 评价不错，风景位很棒</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>路线特点：</strong>整体"先平后下"，前半段山脊横切路为主（起伏不大），后半段下坡石阶到 Nocelle。比瑞士的 First-Bachalpsee 要长但技术难度更低。穿运动鞋或轻徒步鞋即可。
+    </div>
+
+    <div class="callout">
+      <strong>装备建议：</strong>1L+ 饮水（沿途无补给点）、防晒霜+帽子、轻徒步鞋或抓地好的运动鞋、登山杖（可选）。4 月底气温约 18-24°C，建议穿速干衣裤。
+    </div>
+
+  </div></div>
+</div>
+
+<!-- ===== 回程交通 ===== -->
+<div class="card open">
+  <div class="card-header" onclick="this.parentElement.classList.toggle('open')">
+    <div class="card-icon" style="background:#fef7e0">
+      <svg viewBox="0 0 24 24" fill="#f9ab00"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+    </div>
+    <div class="card-info">
+      <div class="card-label">回程：Nocelle → 波西塔诺 → 索伦托</div>
+      <div class="card-sub">巴士/步行 + SITA 巴士 | 约 1.5 小时</div>
+    </div>
+    <div class="card-chevron">▾</div>
+  </div>
+  <div class="card-body"><div class="card-content">
+
+    <div style="font-size:15px;font-weight:600;color:#202124;margin:0 0 12px">第一段：Nocelle → 波西塔诺</div>
+
+    <table class="g-table">
+      <thead><tr><th>方式</th><th>详情</th><th>耗时</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="chip chip-blue">步行</span></td>
+          <td>1500 级台阶下到 Arienzo 海滩<br><span style="color:#9aa0a6;font-size:12px">免费 · 膝盖杀手 · 但风景极好</span></td>
+          <td>30-45 分钟</td>
+        </tr>
+        <tr>
+          <td><span class="chip chip-green">本地巴士</span></td>
+          <td><strong>Interno Positano</strong> 巴士从 Nocelle 下到海边<br><span style="color:#9aa0a6;font-size:12px">€1.50/人 · 在 Nocelle 巴士站等候</span></td>
+          <td>10 分钟</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      如果还有体力，走台阶下去风景无敌（能看到波西塔诺全景）。膝盖不行就坐巴士，班次约 30 分钟一趟。
+    </div>
+
+    <div style="font-size:15px;font-weight:600;color:#202124;margin:16px 0 12px">在波西塔诺自由活动</div>
+    <div style="font-size:13px;color:#5f6368;line-height:1.6;margin-bottom:12px">
+      下到海边后可以在波西塔诺逛 1-2 小时：
+    </div>
+    <table class="g-table">
+      <thead><tr><th>推荐</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Spiaggia Grande</strong></td><td>主海滩，可以坐下来休息看海</td></tr>
+        <tr><td><strong>Via dei Mulini</strong></td><td>主购物街，手工凉鞋和柠檬制品</td></tr>
+        <tr><td><strong>Church of Santa Maria Assunta</strong></td><td>标志性的彩色穹顶教堂</td></tr>
+        <tr><td><strong>午餐推荐</strong></td><td>Da Vincenzo（海鲜）或 Chez Black（海景位）</td></tr>
+      </tbody>
+    </table>
+
+    <div style="font-size:15px;font-weight:600;color:#202124;margin:16px 0 12px">第二段：波西塔诺 → 索伦托</div>
+
+    <table class="g-table">
+      <thead><tr><th>方式</th><th>详情</th><th>耗时</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="chip chip-green">SITA 巴士</span></td>
+          <td>波西塔诺 Sponda 站 → 索伦托<br><span style="color:#9aa0a6;font-size:12px">€2.40 · 约每 30 分钟一班 · 末班约 22:00</span></td>
+          <td>50-60 分钟</td>
+        </tr>
+        <tr>
+          <td><span class="chip chip-blue">渡轮</span></td>
+          <td>波西塔诺码头 → 索伦托码头<br><span style="color:#9aa0a6;font-size:12px">€15-18 · 海上看海岸线 · 旺季才有</span></td>
+          <td>35 分钟</td>
+        </tr>
+        <tr>
+          <td><span class="chip chip-yellow">出租车</span></td>
+          <td>直达索伦托<br><span style="color:#9aa0a6;font-size:12px">€50-70 · 3 人分摊性价比尚可</span></td>
+          <td>30-40 分钟</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      天气好且有渡轮运营时，推荐坐渡轮回索伦托 — 从海上看阿马尔菲海岸是完全不同的视角。TravelMar 和 NLG 两家运营此线路。
+    </div>
+
+  </div></div>
+</div>
+
+<!-- ===== 时间安排建议 ===== -->
+<div class="card open">
+  <div class="card-header" onclick="this.parentElement.classList.toggle('open')">
+    <div class="card-icon" style="background:#f3e8fd">
+      <svg viewBox="0 0 24 24" fill="#7627bb"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+    </div>
+    <div class="card-info">
+      <div class="card-label">推荐时间安排</div>
+      <div class="card-sub">DAY 7 · 4/29 全天</div>
+    </div>
+    <div class="card-chevron">▾</div>
+  </div>
+  <div class="card-body"><div class="card-content">
+
+    <table class="g-table">
+      <colgroup><col style="width:90px"><col></colgroup>
+      <thead><tr><th>时间</th><th>内容</th></tr></thead>
+      <tbody>
+        <tr><td><strong>07:30</strong></td><td>索伦托码头出发 · 渡轮前往阿马尔菲<br><span style="color:#9aa0a6;font-size:12px">Marina Piccola 码头 · 约40min</span></td></tr>
+        <tr><td><strong>08:10</strong></td><td>到达阿马尔菲 · 换乘 5070 巴士上山</td></tr>
+        <tr><td><strong>08:40</strong></td><td>到达 Bomerano · 补给出发</td></tr>
+        <tr><td><strong>09:00</strong></td><td>开始徒步 · Sentiero degli Dei</td></tr>
+        <tr><td><strong>12:00</strong></td><td>到达 Nocelle · 午餐休息</td></tr>
+        <tr><td><strong>13:00</strong></td><td>Nocelle → 波西塔诺（巴士或步行）</td></tr>
+        <tr><td><strong>13:30</strong></td><td>波西塔诺自由活动 · 逛街看海</td></tr>
+        <tr><td><strong>15:30</strong></td><td>波西塔诺 → 索伦托（渡轮或巴士）</td></tr>
+        <tr><td><strong>16:30</strong></td><td>回到索伦托 · 休息</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>节奏说明：</strong>以上时间按轻松节奏估算，含拍照和休息时间。3 人同行，不赶时间，全程没有需要急赶的环节。
+    </div>
+
+  </div></div>
+</div>
+
+<!-- ===== 实用信息 ===== -->
+<div class="card">
+  <div class="card-header" onclick="this.parentElement.classList.toggle('open')">
+    <div class="card-icon" style="background:#fce8e6">
+      <svg viewBox="0 0 24 24" fill="#ea4335"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+    </div>
+    <div class="card-info">
+      <div class="card-label">实用信息 & 注意事项</div>
+      <div class="card-sub">安全、天气、补给</div>
+    </div>
+    <div class="card-chevron">▾</div>
+  </div>
+  <div class="card-body"><div class="card-content">
+
+    <div style="font-size:14px;line-height:1.8">
+      <div style="margin-bottom:12px">
+        <strong style="font-size:15px">安全提示</strong><br>
+        <span style="color:#5f6368">
+        | 全程有明确路标（红白相间的 CAI 标记），不易迷路<br>
+        | 悬崖段有简易护栏，但请勿越过护栏拍照<br>
+        | 雨天路面湿滑危险，如遇降雨建议取消<br>
+        | 手机信号全程基本可用（TIM/Vodafone 覆盖较好）
+        </span>
+      </div>
+      <div style="margin-bottom:12px">
+        <strong style="font-size:15px">天气 & 季节</strong><br>
+        <span style="color:#5f6368">
+        | 4 月底是绝佳季节 — 不太热，野花盛开<br>
+        | 预计气温 18-24°C，山上可能略凉<br>
+        | 建议出发前查天气：yr.no 或 windy.com<br>
+        | 晴天紫外线强，务必防晒
+        </span>
+      </div>
+      <div style="margin-bottom:12px">
+        <strong style="font-size:15px">补给 & 洗手间</strong><br>
+        <span style="color:#5f6368">
+        | 起点 Bomerano 广场有小卖部和洗手间<br>
+        | 沿途无商店无洗手间（约 3-4 小时无补给）<br>
+        | 终点 Nocelle 有餐厅和小卖部<br>
+        | 至少带 1L 水/人，建议带些坚果能量棒
+        </span>
+      </div>
+      <div>
+        <strong style="font-size:15px">费用估算（3人）</strong><br>
+        <span style="color:#5f6368">
+        | 去程渡轮+巴士：约 €14/人（渡轮 €12 + 巴士 €1.30）<br>
+        | 回程渡轮：约 €15-18/人（波西塔诺 → 索伦托）<br>
+        | 波西塔诺午餐：约 €15-25/人<br>
+        | 全天预算：<strong>€50-60/人</strong>（含交通和餐饮）
+        </span>
+      </div>
+    </div>
+
+  </div></div>
+</div>
+
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  Sentiero degli Dei · Path of the Gods · CAI 327
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function(){
+  var map = L.map('trail-map', {scrollWheelZoom:false, zoomControl:true}).setView([40.632, 14.50], 13);
+
+  // Multiple tile sources for reliability
+  var tiles = [
+    {url:'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', attr:'&copy; CARTO &copy; OSM'},
+    {url:'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', attr:'&copy; Esri'},
+    {url:'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', attr:'&copy; OpenStreetMap'}
+  ];
+  var tileIdx = 0;
+  var tileLayer = L.tileLayer(tiles[0].url, {attribution:tiles[0].attr, maxZoom:18}).addTo(map);
+  tileLayer.on('tileerror', function(){
+    if(tileIdx < tiles.length - 1){
+      tileIdx++;
+      map.removeLayer(tileLayer);
+      tileLayer = L.tileLayer(tiles[tileIdx].url, {attribution:tiles[tileIdx].attr, maxZoom:18}).addTo(map);
+    }
+  });
+
+  // Icon helper
+  function ic(color, size, label){
+    var h = '<div style="position:relative"><div style="width:'+size+'px;height:'+size+'px;background:'+color+';border:2.5px solid #fff;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.3)"></div>'
+      + (label?'<div style="position:absolute;top:'+(size+3)+'px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:11px;font-weight:600;color:'+color+';text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 3px #fff,0 0 3px #fff">'+label+'</div>':'')+'</div>';
+    return L.divIcon({className:'',html:h,iconSize:[size,size],iconAnchor:[size/2,size/2],popupAnchor:[0,-size/2-4]});
+  }
+
+  // === CORRECTED COORDINATES ===
+  // Sorrento: 40.6263, 14.3758
+  // Amalfi: 40.6340, 14.6027
+  // Bomerano (trailhead): 40.6297, 14.5384
+  // Nocelle: 40.6288, 14.5033
+  // Positano: 40.6283, 14.4843
+
+  // Markers
+  L.marker([40.6263,14.3758],{icon:ic('#1a73e8',14,'索伦托')}).addTo(map)
+    .bindPopup('<strong>索伦托</strong><br>出发地 · Marina Piccola 码头<br><span class="pop-sub">渡轮 → 阿马尔菲 约40min · €12-15/人</span>');
+
+  L.marker([40.6340,14.6027],{icon:ic('#1a73e8',11,'阿马尔菲')}).addTo(map)
+    .bindPopup('<strong>阿马尔菲</strong><br>换乘 SITA 5070 上山<br><span class="pop-sub">→ Bomerano 约25min</span>');
+
+  L.marker([40.6297,14.5384],{icon:ic('#34a853',18,'起点 Bomerano')}).addTo(map)
+    .bindPopup('<strong>Bomerano (起点)</strong><br>Piazza Capasso · 海拔 638m<br><span class="pop-sub">有洗手间和小卖部 · CAI 327 出发</span>');
+
+  // Trail waypoints (along the ridge, roughly west from Bomerano to Nocelle)
+  L.marker([40.6320,14.5300],{icon:ic('#f9ab00',10,'')}).addTo(map)
+    .bindPopup('<strong>第一观景台</strong><br><span class="pop-sub">俯瞰阿马尔菲海岸 · 约2km</span>');
+
+  L.marker([40.6335,14.5220],{icon:ic('#f9ab00',10,'')}).addTo(map)
+    .bindPopup('<strong>Grotta Biscotto</strong><br><span class="pop-sub">天然岩洞休息点 · 约3km</span>');
+
+  L.marker([40.6340,14.5140],{icon:ic('#f9ab00',10,'')}).addTo(map)
+    .bindPopup('<strong>悬崖步道 (精华段)</strong><br><span class="pop-sub">500m落差 · 地中海全景</span>');
+
+  L.marker([40.6320,14.5080],{icon:ic('#1a73e8',10,'')}).addTo(map)
+    .bindPopup('<strong>Colle Serra</strong><br><span class="pop-sub">360°环视 · 海拔580m</span>');
+
+  L.marker([40.6288,14.5033],{icon:ic('#ea4335',18,'终点 Nocelle')}).addTo(map)
+    .bindPopup('<strong>Nocelle (终点)</strong><br>海拔 443m<br><span class="pop-sub">巴士或步行1500级台阶下波西塔诺</span>');
+
+  L.marker([40.6283,14.4843],{icon:ic('#7627bb',14,'波西塔诺')}).addTo(map)
+    .bindPopup('<strong>波西塔诺</strong><br><span class="pop-sub">渡轮或巴士回索伦托</span>');
+
+  // === ROUTES ===
+
+  // Ferry: Sorrento → Amalfi (sea route)
+  L.polyline([
+    [40.6263,14.3758],[40.6220,14.3850],[40.6180,14.4100],
+    [40.6160,14.4400],[40.6170,14.4700],[40.6200,14.5000],
+    [40.6220,14.5300],[40.6260,14.5600],[40.6300,14.5900],[40.6340,14.6027]
+  ],{color:'#1a73e8',weight:3,opacity:.55,dashArray:'6,6'}).addTo(map);
+
+  // Bus: Amalfi → Bomerano (mountain road up to Agerola)
+  L.polyline([
+    [40.6340,14.6027],[40.6380,14.5900],[40.6420,14.5750],
+    [40.6450,14.5600],[40.6460,14.5500],[40.6440,14.5420],
+    [40.6380,14.5380],[40.6297,14.5384]
+  ],{color:'#1a73e8',weight:3,opacity:.55,dashArray:'6,6'}).addTo(map);
+
+  // Hiking: Bomerano → Nocelle (along mountain ridge, heading west)
+  var trail = [
+    [40.6297,14.5384],[40.6300,14.5360],[40.6308,14.5340],[40.6315,14.5320],
+    [40.6320,14.5300],[40.6325,14.5275],[40.6330,14.5250],[40.6335,14.5220],
+    [40.6338,14.5190],[40.6340,14.5160],[40.6340,14.5140],[40.6338,14.5120],
+    [40.6335,14.5100],[40.6330,14.5085],[40.6320,14.5080],[40.6310,14.5065],
+    [40.6300,14.5050],[40.6295,14.5040],[40.6288,14.5033]
+  ];
+  L.polyline(trail,{color:'#ea4335',weight:5,opacity:.9,lineCap:'round',lineJoin:'round'}).addTo(map);
+
+  // Descent: Nocelle → Positano
+  L.polyline([
+    [40.6288,14.5033],[40.6285,14.5010],[40.6282,14.4980],[40.6280,14.4950],
+    [40.6278,14.4920],[40.6280,14.4890],[40.6282,14.4860],[40.6283,14.4843]
+  ],{color:'#7627bb',weight:3,opacity:.6,dashArray:'8,8'}).addTo(map);
+
+  // Fit all points
+  map.fitBounds([
+    [40.6460,14.3758],[40.6245,14.6027]
+  ],{padding:[30,30]});
+
+  map.once('click',function(){map.scrollWheelZoom.enable()});
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Italy + Switzerland Travel Schedule</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202124;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* Top bar */
+.topbar{background:#fff;padding:16px 24px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #e0e0e0;position:sticky;top:0;z-index:101}
+.topbar-icon{font-size:28px}
+.topbar-title{font-size:18px;font-weight:500;color:#202124;flex:1}
+.topbar-meta{font-size:13px;color:#5f6368;display:flex;gap:12px}
+.topbar-meta span{display:flex;align-items:center;gap:4px}
+.topbar-meta span+span::before{content:'';width:1px;height:8px;background:#d0d0d0;margin-right:8px}
+.topbar-meta svg{flex-shrink:0}
+
+/* Tabs */
+.tabs{background:#fff;display:flex;border-bottom:1px solid #e0e0e0;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;position:sticky;top:61px;z-index:100}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:12px 20px;font-size:14px;font-weight:500;color:#5f6368;border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:all .15s;font-family:inherit}
+.tab:hover{color:#202124;background:#f1f3f4}
+.tab.active{color:#1a73e8;border-bottom-color:#1a73e8}
+
+/* Content */
+.content{max-width:800px;margin:0 auto;padding:16px}
+.panel{display:none}
+.panel.active{display:block}
+
+/* Cards */
+.card{background:#fff;border-radius:12px;border:1px solid #e0e0e0;margin-bottom:12px;overflow:hidden}
+.card-header{padding:12px 20px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;background:#f8f9fa;border-bottom:1px solid #eee;transition:background .1s}
+.card-header:hover{background:#f1f3f4}
+.card-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.dot-green{background:#34a853}
+.dot-cyan{background:#00acc1}
+.dot-blue{background:#4285f4}
+.dot-red{background:#ea4335}
+.dot-orange{background:#f9ab00}
+.card-info{flex:1;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.card-day{font-size:15px;font-weight:600;color:#1a73e8;white-space:nowrap}
+.card-title{font-size:13px;font-weight:500;color:#5f6368}
+.card-chevron{display:none}
+.card.open .card-chevron{transform:rotate(180deg)}
+.card-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.card.open .card-body{max-height:3000px}
+.card-content{padding:14px 20px 16px}
+
+/* Items */
+.item{display:flex;gap:10px;padding:7px 0;font-size:14px;align-items:flex-start}
+.item-icon{width:10px;height:10px;flex-shrink:0;margin-top:7px;display:flex;align-items:center;justify-content:center}
+.item-icon::after{content:'';width:6px;height:6px;border-radius:50%;background:#d0d0d0}
+.item-text{flex:1;color:#202124;font-weight:500}
+.item-text strong{font-weight:500;color:#202124;font-size:15px}
+.item-text .sub{color:#9aa0a6;font-size:13px;font-weight:400}
+.chip{display:inline-block;padding:2px 8px;border-radius:100px;font-size:12px;font-weight:500;min-width:40px;text-align:center}
+.chip-blue{background:#e8f0fe;color:#1a73e8}
+.chip-green{background:#e6f4ea;color:#137333}
+.chip-yellow{background:#fef7e0;color:#b06000}
+.chip-red{background:#fce8e6;color:#c5221f}
+.chip-purple{background:#f3e8fd;color:#7627bb}
+
+.section-label{font-size:13px;font-weight:700;color:#1a73e8;padding:10px 0 4px 20px;text-transform:uppercase;letter-spacing:.5px}
+
+/* Callout - gray small text with top divider */
+.callout{padding:12px 0 0;margin:8px 0 0;border-top:1px solid #e0e0e0;font-size:13px;color:#9aa0a6;line-height:1.6}
+.callout strong{font-weight:500;color:#9aa0a6}
+.callout+.callout{border-top:none;margin-top:0;padding-top:2px}
+.callout-info,.callout-warn,.callout-error{background:none}
+.callout-icon{display:none}
+.callout-text{flex:1}
+
+/* Table */
+.g-table{width:100%;border-collapse:collapse;font-size:14px;margin:0}
+.g-table th{text-align:left;padding:10px 12px;font-weight:500;color:#5f6368;font-size:12px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid #e0e0e0;background:none;vertical-align:middle;white-space:nowrap;line-height:1.5}
+.g-table td{text-align:left;padding:10px 12px;border-bottom:1px solid #e0e0e0;color:#111;vertical-align:middle;line-height:1.5}
+.g-table tr:last-child td{border-bottom:none}
+.g-table tr:hover td{background:#f8f9fa}
+.g-table th:first-child,.g-table td:first-child{padding-left:20px}
+.g-table th:last-child,.g-table td:last-child{padding-right:20px}
+
+/* Overview rows */
+.ov-list{background:#fff;border-radius:12px;border:1px solid #e0e0e0;overflow:hidden}
+.ov-item{display:flex;align-items:center;padding:12px 16px;border-bottom:1px solid #f1f3f4;font-size:14px;gap:10px;cursor:pointer;transition:background .1s}
+.ov-item:last-child{border-bottom:none}
+.ov-item:hover{background:#f1f3f4}
+.ov-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.ov-dot-g{background:#34a853}
+.ov-dot-c{background:#00acc1}
+.ov-dot-b{background:#4285f4}
+.ov-num{font-size:13px;font-weight:600;color:#5f6368;width:24px;flex-shrink:0}
+.ov-date{width:64px;font-size:13px;color:#5f6368;flex-shrink:0}
+.ov-city{flex:1;font-weight:500;color:#202124}
+.ov-tag{font-size:12px;color:#9aa0a6;text-align:right;white-space:nowrap}
+
+/* Checkbox list */
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;font-size:14px;border-bottom:1px solid #f1f3f4}
+.check-item:last-child{border-bottom:none}
+.check-box{width:18px;height:18px;border:2px solid #1a73e8;border-radius:4px;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;cursor:pointer;transition:all .15s}
+.check-box.done{background:#1a73e8}
+.check-box.skip{background:#5f6368;border-color:#5f6368;cursor:default}
+.check-text{flex:1;color:#3c4043}
+.check-text .line-through{text-decoration:line-through;color:#9aa0a6}
+
+/* Budget highlight */
+.budget-box{background:#1a73e8;color:#fff;border-radius:12px;padding:20px;text-align:center;margin-top:16px}
+.budget-amount{font-size:24px;font-weight:700}
+.budget-sub{font-size:13px;opacity:.85;margin-top:4px}
+
+/* Section title inside panels */
+.panel-heading{font-size:20px;font-weight:700;color:#202124;margin:20px 0 4px;display:flex;align-items:center;gap:8px}
+.panel-heading:first-child{margin-top:0}
+.panel-divider{height:1px;background:#e0e0e0;margin:4px 0 12px}
+.sub-title{font-size:16px;font-weight:500;color:#202124;margin:16px 0 8px}
+
+/* Footer */
+.footer{text-align:center;padding:32px 24px;font-size:12px;color:#9aa0a6}
+
+/* View link */
+.view-link{color:#1a73e8;font-size:13px;font-weight:400;cursor:pointer;margin-left:6px;white-space:nowrap}
+.view-link:hover{text-decoration:underline}
+
+@media(max-width:640px){
+  .content{padding:16px}
+  .topbar{padding:12px 16px}
+  .topbar-meta{display:none}
+  .tab{padding:10px 14px;font-size:13px}
+  .g-table{font-size:13px}
+  .g-table th,.g-table td{padding:8px}
+}
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="topbar">
+  <div class="topbar-icon">🇮🇹🇨🇭</div>
+  <div class="topbar-title">Italy + Switzerland Travel Schedule</div>
+  <div class="topbar-meta">
+    <span>4/23 - 5/5</span>
+    <span>时差-6h</span>
+  </div>
+</div>
+
+<!-- Tabs -->
+<div class="tabs">
+  <button class="tab active" data-t="overview">总览</button>
+  <button class="tab" data-t="itinerary">每日行程</button>
+  <button class="tab" data-t="transport">交通</button>
+  <button class="tab" data-t="tickets">门票</button>
+  <button class="tab" data-t="budget">预算</button>
+  <button class="tab" data-t="notes">注意事项</button>
+  <button class="tab" data-t="packing">物品清单</button>
+</div>
+
+<div class="content">
+
+<!-- ========== OVERVIEW ========== -->
+<div class="panel active" id="overview">
+  <div class="ov-list">
+    <div class="ov-item" data-day="d1"><div class="ov-dot ov-dot-b"></div><div class="ov-num">1</div><div class="ov-date">4/23 四</div><div class="ov-city">深圳 → 香港</div><div class="ov-tag">出发</div></div>
+    <div class="ov-item" data-day="d2"><div class="ov-dot ov-dot-g"></div><div class="ov-num">2</div><div class="ov-date">4/24 五</div><div class="ov-city">米兰 → 佛罗伦萨</div><div class="ov-tag">米开朗基罗广场</div></div>
+    <div class="ov-item" data-day="d3"><div class="ov-dot ov-dot-g"></div><div class="ov-num">3</div><div class="ov-date">4/25 六</div><div class="ov-city">托斯卡纳</div><div class="ov-tag">跟团一日游</div></div>
+    <div class="ov-item" data-day="d4"><div class="ov-dot ov-dot-g"></div><div class="ov-num">4</div><div class="ov-date">4/26 日</div><div class="ov-city">佛罗伦萨 → 罗马</div><div class="ov-tag">上午大卫 · 下午万神殿</div></div>
+    <div class="ov-item" data-day="d5"><div class="ov-dot ov-dot-g"></div><div class="ov-num">5</div><div class="ov-date">4/27 一</div><div class="ov-city">罗马</div><div class="ov-tag">上午斗兽场 · 下午梵蒂冈</div></div>
+    <div class="ov-item" data-day="d6"><div class="ov-dot ov-dot-g"></div><div class="ov-num">6</div><div class="ov-date">4/28 二</div><div class="ov-city">罗马 → 索伦托</div><div class="ov-tag">上午罗马 · 下午南下</div></div>
+    <div class="ov-item" data-day="d7"><div class="ov-dot ov-dot-g"></div><div class="ov-num">7</div><div class="ov-date">4/29 三</div><div class="ov-city">索伦托</div><div class="ov-tag">诸神之路徒步</div></div>
+    <div class="ov-item" data-day="d8"><div class="ov-dot ov-dot-g"></div><div class="ov-num">8</div><div class="ov-date">4/30 四</div><div class="ov-city">卡普里岛</div><div class="ov-tag">蓝洞 · 海岛一日游</div></div>
+    <div class="ov-item" data-day="d9"><div class="ov-dot ov-dot-c"></div><div class="ov-num">9</div><div class="ov-date">5/1 五</div><div class="ov-city">索伦托 → 格林德瓦尔德</div><div class="ov-tag">经罗马飞瑞士</div></div>
+    <div class="ov-item" data-day="d10"><div class="ov-dot ov-dot-c"></div><div class="ov-num">10</div><div class="ov-date">5/2 六</div><div class="ov-city">格林德瓦尔德</div><div class="ov-tag">First · Bachalpsee 轻徒步</div></div>
+    <div class="ov-item" data-day="d11"><div class="ov-dot ov-dot-c"></div><div class="ov-num">11</div><div class="ov-date">5/3 日</div><div class="ov-city">格林德瓦尔德 → 米兰</div><div class="ov-tag">火车到米兰</div></div>
+    <div class="ov-item" data-day="d12"><div class="ov-dot ov-dot-b"></div><div class="ov-num">12</div><div class="ov-date">5/4 一</div><div class="ov-city">米兰 → 香港</div><div class="ov-tag">回程</div></div>
+    <div class="ov-item" data-day="d13"><div class="ov-dot ov-dot-b"></div><div class="ov-num">13</div><div class="ov-date">5/5 二</div><div class="ov-city">香港 → 深圳</div><div class="ov-tag">到家</div></div>
+  </div>
+</div>
+
+<!-- ========== ITINERARY ========== -->
+<div class="panel" id="itinerary">
+
+  <!-- D1 -->
+  <div class="card open"><div class="card-header" onclick="this.parentElement.classList.toggle('open')"><div class="card-dot dot-blue"></div><div class="card-info"><div id="d1" class="card-day">DAY 1 · 4/23 周四</div><div class="card-title">深圳 → 香港 · 出发</div></div><div class="card-chevron">▾</div></div><div class="card-body"><div class="card-content">
+    <div class="item"><div class="item-icon"></div><div class="item-text">下班后前往香港机场</div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>CX233 香港→米兰</strong><br><span class="sub">00:50 起飞</span></div></div>
+    <div class="callout callout-info"><div class="callout-text">提前值机选座，长途飞行带颈枕和眼罩</div></div>
+  </div></div></div>
+
+  <!-- D2 -->
+  <div class="card open"><div class="card-header" onclick="this.parentElement.classList.toggle('open')"><div class="card-dot dot-green"></div><div class="card-info"><div id="d2" class="card-day">DAY 2 · 4/24 周五</div><div class="card-title">米兰 → 佛罗伦萨</div></div><div class="card-chevron">▾</div></div><div class="card-body"><div class="card-content">
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>抵达米兰 MXP</strong><br><span class="sub">08:00</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>米兰→佛罗伦萨高铁</strong><br><span class="sub">Malpensa Express → Milano Centrale 50min → Firenze S.M.N. 高铁 1h50m，预计 12:00 抵达</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text">入住佛罗伦萨<br><span class="sub">建议 S.M.N. 火车站附近</span></div></div>
+    <div class="section-label">下午备选</div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>中央市场</strong> Mercato Centrale <span class="chip chip-green">免费</span><br><span class="sub">二楼美食广场，牛肚包/手工意面</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>圣十字大殿</strong> Basilica di Santa Croce<br><span class="sub">但丁/伽利略/米开朗基罗墓 ~€8</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>米开朗基罗广场</strong> <span class="chip chip-green">免费</span><br><span class="sub">傍晚看日落全景</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text">晚餐推荐 T-bone 牛排</div></div>
+    <div class="callout callout-info"><div class="callout-text">Malpensa Express → trenord.it · 高铁 → trenitalia.com 或 italotreno.it</div></div>
+  </div></div></div>
+
+  <!-- D3 -->
+  <div class="card open"><div class="card-header" onclick="this.parentElement.classList.toggle('open')"><div class="card-dot dot-green"></div><div class="card-info"><div id="d3" class="card-day">DAY 3 · 4/25 周六</div><div class="card-title">托斯卡纳一日游</div></div><div class="card-chevron">▾</div></div><div class="card-body"><div class="card-content">
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>托斯卡纳跟团一日游</strong><br><span class="sub">锡耶纳 → 圣吉米尼亚诺 → 蒙特里焦尼 → 酒庄品酒</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text">住佛罗伦萨</div></div>
+    <div class="callout callout-info"><div class="callout-text"><strong>预订</strong> 飞猪 / GetYourGuide / Viator 搜 "Tuscany Day Trip from Florence"</div></div>
+  </div></div></div>
+
+  <!-- D4 -->
+  <div class="card open"><div class="card-header" onclick="this.parentElement.classList.toggle('open')"><div class="card-dot dot-green"></div><div class="card-info"><div id="d4" class="card-day">DAY 4 · 4/26 周日</div><div class="card-title">佛罗伦萨精华 → 罗马</div></div><div class="card-chevron">▾</div></div><div class="card-body"><div class="card-content">
+    <div class="section-label">上午 — 佛罗伦萨</div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>圣母百花大教堂</strong><br><span class="sub">外观免费，穹顶约不到→外观拍照</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>学院美术馆 — 真大卫</strong> <span class="chip chip-yellow">飞猪买票</span><br><span class="sub">约 1-1.5h</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>领主广场 & 旧宫</strong> <span class="chip chip-green">免费</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>老桥</strong> <span class="chip chip-green">免费</span><br><span class="sub">Ponte Vecchio</span></div></div>
+    <div class="section-label">中午 → 罗马</div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>佛罗伦萨→罗马</strong><br><span class="sub">高铁 1h30m</span></div></div>
+    <div class="section-label">下午 — 罗马</div>
+    <div class="item"><div class="item-icon"></div><div class="item-text">入住罗马</div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>西班牙广场</strong> <span class="chip chip-green">免费</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>万神殿</strong> <span class="chip chip-yellow">飞猪提前2天 €5</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>纳沃纳广场</strong> <span class="chip chip-green">免费</span><br><span class="sub">四河喷泉</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>特雷维喷泉</strong> <span class="chip chip-green">免费</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text">晚餐在 Trastevere 区</div></div>
+  </div></div></div>
+
+  <!-- D5 -->
+  <div class="card open"><div class="card-header" onclick="this.parentElement.classList.toggle('open')"><div class="card-dot dot-green"></div><div class="card-info"><div id="d5" class="card-day">DAY 5 · 4/27 周一</div><div class="card-title">罗马深度游 · 斗兽场 + 梵蒂冈</div></div><div class="card-chevron">▾</div></div><div class="card-body"><div class="card-content">
+    <div class="section-label">上午 — 斗兽场</div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>斗兽场 + 古罗马广场 + 帕拉蒂尼山</strong> <span class="chip chip-yellow">待购</span><br><span class="sub">联票3景点，约3-4h，建议 8:30 开门就去</span></div></div>
+    <div class="section-label">下午 — 梵蒂冈</div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>梵蒂冈博物馆</strong><br><span class="sub">含西斯廷教堂，现场刷二维码，约2-3h</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>圣彼得大教堂</strong> <span class="chip chip-green">免费</span><br><span class="sub">需排队</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>圣天使堡</strong><br><span class="sub">外观拍照</span></div></div>
+    <div class="callout callout-info"><div class="callout-text">梵蒂冈博物馆周日闭馆，安排周一。穿舒适鞋子，这天走路很多</div></div>
+  </div></div></div>
+
+  <!-- D6 -->
+  <div class="card open"><div class="card-header" onclick="this.parentElement.classList.toggle('open')"><div class="card-dot dot-green"></div><div class="card-info"><div id="d6" class="card-day">DAY 6 · 4/28 周二</div><div class="card-title">罗马 → 索伦托</div></div><div class="card-chevron">▾</div></div><div class="card-body"><div class="card-content">
+    <div class="section-label">上午 — 罗马收尾</div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>达·芬奇体验博物馆</strong><br><span class="sub">最后的晚餐复制品</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>真理之口</strong> <span class="chip chip-green">免费</span></div></div>
+    <div class="section-label">下午 → 索伦托</div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>Roma → Napoli</strong><br><span class="sub">高铁 1h10m</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>Napoli → Sorrento</strong><br><span class="sub">Circumvesuviana 约1h，注意看管随身物品</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text">入住索伦托</div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text">晚上逛小镇，喝柠檬酒</div></div>
+  </div></div></div>
+
+  <!-- D7 -->
+  <div class="card open"><div class="card-header" onclick="this.parentElement.classList.toggle('open')"><div class="card-dot dot-green"></div><div class="card-info"><div id="d7" class="card-day">DAY 7 · 4/29 周三</div><div class="card-title">诸神之路徒步</div></div><div class="card-chevron">▾</div></div><div class="card-body"><div class="card-content">
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>索伦托 → Bomerano</strong><br><span class="sub">渡轮到阿马尔菲约40min，换5070巴士上山约25min</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>诸神之路</strong><br><span class="sub">Bomerano → Nocelle，3-4h，沿途阿马尔菲海岸绝美海景</span><span class="view-link" onclick="window.location.href='path-of-gods.html'">查看路线</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text">下山到<strong>波西塔诺</strong></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text">波西塔诺海滩休息、拍照</div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>波西塔诺→索伦托</strong><br><span class="sub">渡轮 30min</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text">住索伦托</div></div>
+  </div></div></div>
+
+  <!-- D8 -->
+  <div class="card open"><div class="card-header" onclick="this.parentElement.classList.toggle('open')"><div class="card-dot dot-green"></div><div class="card-info"><div id="d8" class="card-day">DAY 8 · 4/30 周四</div><div class="card-title">卡普里岛</div></div><div class="card-chevron">▾</div></div><div class="card-body"><div class="card-content">
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>索伦托→卡普里岛</strong><br><span class="sub">渡轮 20-30min</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>蓝洞</strong> Grotta Azzurra<br><span class="sub">看天气</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>Anacapri</strong><br><span class="sub">缆车上山，360° 观景</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text">自然拱门、奥古斯都花园</div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text">傍晚船回索伦托</div></div>
+  </div></div></div>
+
+  <!-- D9 -->
+  <div class="card open"><div class="card-header" onclick="this.parentElement.classList.toggle('open')"><div class="card-dot dot-cyan"></div><div class="card-info"><div id="d9" class="card-day">DAY 9 · 5/1 周五</div><div class="card-title">索伦托 → 格林德瓦尔德</div></div><div class="card-chevron">▾</div></div><div class="card-body"><div class="card-content">
+    <div class="section-label">上午 — 离开索伦托</div>
+    <div class="item"><div class="item-icon"></div><div class="item-text">早起收拾退房</div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>Sorrento → Napoli</strong><br><span class="sub">Circumvesuviana 约1h</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>Napoli → Roma</strong><br><span class="sub">高铁 1h10m</span></div></div>
+    <div class="section-label">下午 — 飞瑞士</div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>Roma Termini → Fiumicino</strong><br><span class="sub">Leonardo Express 32min</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>罗马FCO → 苏黎世ZRH</strong><br><span class="sub">约1h40m，easyJet/Swiss/ITA，选下午航班</span></div></div>
+    <div class="section-label">傍晚 — 格林德瓦尔德</div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>苏黎世机场 → Interlaken Ost</strong><br><span class="sub">约2h</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>Interlaken → Grindelwald</strong><br><span class="sub">35min</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text">入住格林德瓦尔德</div></div>
+    <div class="callout callout-warn"><div class="callout-text">5月1日意大利劳动节，交通正常。这天比较赶，提前买好所有票</div></div>
+  </div></div></div>
+
+  <!-- D10 -->
+  <div class="card open"><div class="card-header" onclick="this.parentElement.classList.toggle('open')"><div class="card-dot dot-cyan"></div><div class="card-info"><div id="d10" class="card-day">DAY 10 · 5/2 周六</div><div class="card-title">First 轻徒步 · Bachalpsee</div></div><div class="card-chevron">▾</div></div><div class="card-body"><div class="card-content">
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>First 缆车</strong><br><span class="sub">约25min，360° 看少女峰、艾格峰、施雷克峰，往返 CHF 63</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>First 悬崖步道</strong><br><span class="sub">含在缆车票内</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>轻徒步 → Bachalpsee 湖</strong><br><span class="sub">单程约 50min，难度低，几乎平路，高山湖泊倒映雪峰</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text">缆车下山</div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text">下午镇上喝咖啡</div></div>
+    <div class="callout callout-info"><div class="callout-text">往返约 2.5-3h 含休息。5月初可能有残雪，穿防水鞋，带外套（5-10°C）</div></div>
+  </div></div></div>
+
+  <!-- D11 -->
+  <div class="card open"><div class="card-header" onclick="this.parentElement.classList.toggle('open')"><div class="card-dot dot-cyan"></div><div class="card-info"><div id="d11" class="card-day">DAY 11 · 5/3 周日</div><div class="card-title">格林德瓦尔德 → 米兰</div></div><div class="card-chevron">▾</div></div><div class="card-body"><div class="card-content">
+    <div class="section-label">上午 — 最后的瑞士</div>
+    <div class="item"><div class="item-icon"></div><div class="item-text">睡到自然醒，吃个早午餐</div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text">退房</div></div>
+    <div class="section-label">下午 — 火车去米兰</div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>Grindelwald → Milano Centrale</strong><br><span class="sub">经 Interlaken → Bern 转车，约3.5h，sbb.ch 买联运票</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text">入住米兰<br><span class="sub">Milano Centrale 附近</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text">晚上逛 <strong>Navigli 运河区</strong></div></div>
+  </div></div></div>
+
+  <!-- D12 -->
+  <div class="card open"><div class="card-header" onclick="this.parentElement.classList.toggle('open')"><div class="card-dot dot-blue"></div><div class="card-info"><div id="d12" class="card-day">DAY 12 · 5/4 周一</div><div class="card-title">米兰 → 香港</div></div><div class="card-chevron">▾</div></div><div class="card-body"><div class="card-content">
+    <div class="item"><div class="item-icon"></div><div class="item-text">上午从容准备</div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>Milano Centrale → Malpensa</strong><br><span class="sub">50min</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>CX234 米兰→香港</strong><br><span class="sub">12:45 起飞，次日 06:25 抵达</span></div></div>
+    <div class="callout callout-info"><div class="callout-text">建议 10:00 前到机场。早上有时间可在 Centrale 附近快速逛逛</div></div>
+  </div></div></div>
+
+  <!-- D13 -->
+  <div class="card open"><div class="card-header" onclick="this.parentElement.classList.toggle('open')"><div class="card-dot dot-blue"></div><div class="card-info"><div id="d13" class="card-day">DAY 13 · 5/5 周二</div><div class="card-title">香港 → 深圳</div></div><div class="card-chevron">▾</div></div><div class="card-body"><div class="card-content">
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>抵达香港</strong><br><span class="sub">06:25</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>香港→深圳</strong><br><span class="sub">高铁约15min</span></div></div>
+  </div></div></div>
+
+</div>
+
+<!-- ========== TRANSPORT ========== -->
+<div class="panel" id="transport">
+
+  <div class="card" style="margin-bottom:16px"><div class="card-header" style="cursor:default">
+    <div class="card-dot dot-green"></div><div class="card-info"><div class="card-title">意大利境内火车</div></div>
+  </div><div class="card-body" style="max-height:none"><div class="card-content" style="padding:0">
+    <table class="g-table" style="table-layout:fixed">
+      <colgroup><col style="width:40%"><col style="width:12%"><col style="width:16%"><col style="width:20%"><col style="width:12%"></colgroup>
+      <tr><th>路线</th><th>时长</th><th>参考价</th><th>平台</th><th>状态</th></tr>
+      <tr><td>米兰机场→市区<br><span class="sub">Malpensa Express</span></td><td>50min</td><td>€13</td><td>trenord.it</td><td><span class="chip chip-yellow">待购</span></td></tr>
+      <tr><td>米兰→佛罗伦萨<br><span class="sub">Frecciarossa / Italo</span></td><td>1h50m</td><td>€29-65</td><td>trenitalia / italo</td><td><span class="chip chip-yellow">待购</span></td></tr>
+      <tr><td>佛罗伦萨→罗马<br><span class="sub">Frecciarossa / Italo</span></td><td>1h30m</td><td>€19-50</td><td>trenitalia / italo</td><td><span class="chip chip-yellow">待购</span></td></tr>
+      <tr><td>罗马→那不勒斯<br><span class="sub">Frecciarossa / Italo</span></td><td>1h10m</td><td>€15-45</td><td>trenitalia / italo</td><td><span class="chip chip-yellow">待购</span></td></tr>
+      <tr><td>那不勒斯→索伦托<br><span class="sub">Circumvesuviana</span></td><td>1h</td><td>€4.40</td><td>现场购票</td><td><span class="chip chip-green">现场</span></td></tr>
+      <tr><td>罗马→Fiumicino<br><span class="sub">Leonardo Express</span></td><td>32min</td><td>€14</td><td>trenitalia</td><td><span class="chip chip-yellow">待购</span></td></tr>
+    </table>
+  </div></div></div>
+
+  <div class="card" style="margin-bottom:16px"><div class="card-header" style="cursor:default">
+    <div class="card-dot dot-orange"></div><div class="card-info"><div class="card-title">航班</div></div>
+  </div><div class="card-body" style="max-height:none"><div class="card-content" style="padding:0">
+    <table class="g-table" style="table-layout:fixed">
+      <colgroup><col style="width:40%"><col style="width:12%"><col style="width:16%"><col style="width:20%"><col style="width:12%"></colgroup>
+      <tr><th>路线</th><th>时长</th><th>参考价</th><th>平台</th><th>状态</th></tr>
+      <tr><td>香港→米兰</td><td>12h</td><td>¥12,368/人</td><td>国泰</td><td><span class="chip chip-blue">已购</span></td></tr>
+      <tr><td>米兰→香港</td><td>12h</td><td>含往返</td><td>国泰</td><td><span class="chip chip-blue">已购</span></td></tr>
+      <tr><td>罗马→苏黎世</td><td>1h40m</td><td>€50-90</td><td>easyJet / Swiss</td><td><span class="chip chip-yellow">待购</span></td></tr>
+    </table>
+  </div></div></div>
+
+  <div class="card" style="margin-bottom:16px"><div class="card-header" style="cursor:default">
+    <div class="card-dot dot-green"></div><div class="card-info"><div class="card-title">南意渡轮</div></div>
+  </div><div class="card-body" style="max-height:none"><div class="card-content" style="padding:0">
+    <table class="g-table" style="table-layout:fixed">
+      <colgroup><col style="width:40%"><col style="width:12%"><col style="width:16%"><col style="width:20%"><col style="width:12%"></colgroup>
+      <tr><th>路线</th><th>时长</th><th>参考价</th><th>平台</th><th>状态</th></tr>
+      <tr><td>索伦托→卡普里</td><td>30min</td><td>€20-25</td><td>caremar.it</td><td><span class="chip chip-green">现场</span></td></tr>
+      <tr><td>波西塔诺→索伦托</td><td>30min</td><td>€18-20</td><td>码头现场</td><td><span class="chip chip-green">现场</span></td></tr>
+    </table>
+  </div></div></div>
+
+  <div class="card" style="margin-bottom:16px"><div class="card-header" style="cursor:default">
+    <div class="card-dot dot-cyan"></div><div class="card-info"><div class="card-title">瑞士火车 & 缆车</div></div>
+  </div><div class="card-body" style="max-height:none"><div class="card-content" style="padding:0">
+    <table class="g-table" style="table-layout:fixed">
+      <colgroup><col style="width:40%"><col style="width:12%"><col style="width:16%"><col style="width:20%"><col style="width:12%"></colgroup>
+      <tr><th>路线</th><th>时长</th><th>参考价</th><th>平台</th><th>状态</th></tr>
+      <tr><td>苏黎世机场→Interlaken</td><td>2h</td><td>CHF 33</td><td>sbb.ch</td><td><span class="chip chip-yellow">待购</span></td></tr>
+      <tr><td>Interlaken→Grindelwald</td><td>35min</td><td>CHF 12</td><td>sbb.ch</td><td><span class="chip chip-yellow">待购</span></td></tr>
+      <tr><td>First 缆车往返</td><td>—</td><td>CHF 63</td><td>jungfrau.ch</td><td><span class="chip chip-green">现场</span></td></tr>
+      <tr><td>Grindelwald→Milano Centrale</td><td>3.5h</td><td>€29-60</td><td>sbb.ch 联运</td><td><span class="chip chip-yellow">待购</span></td></tr>
+    </table>
+  </div></div></div>
+
+  <div class="callout"><div class="callout-text"><strong>省钱建议</strong><br>· 意大利火车提前 2-4 周买 Super Economy 票最便宜<br>· easyJet 手提行李免费（45×36×20cm），托运另购</div></div>
+</div>
+
+<!-- ========== TICKETS ========== -->
+<div class="panel" id="tickets">
+  <div class="card" style="margin-bottom:16px"><div class="card-body" style="max-height:none"><div class="card-content" style="padding:8px 20px">
+  <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>托斯卡纳一日游 Tuscany Day Trip</strong> — 跟团，需提前预订 <span class="chip chip-yellow">飞猪/Viator</span></div></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>佛罗伦萨学院美术馆 Galleria dell'Accademia</strong> ~€20 <span class="chip chip-yellow">飞猪买票</span></div></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>圣母百花大教堂穹顶 Cupola del Brunelleschi</strong> ~€30 <span class="chip chip-yellow">飞猪尝试约</span></div></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>万神殿 Pantheon</strong> €5 <span class="chip chip-yellow">飞猪提前2天</span></div></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>罗马斗兽场 Colosseo</strong>（含古罗马广场 + 帕拉蒂尼山联票）~€18 <span class="chip chip-yellow">待购</span></div></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>梵蒂冈博物馆 Vatican Museums</strong>（含西斯廷教堂 Sistine Chapel）~€17 <span class="chip chip-green">现场刷码</span></div></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>蓝洞 Grotta Azzurra</strong>（卡普里岛）~€18 <span class="chip chip-green">现场购票</span></div></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>First 缆车 + 悬崖步道 First Cliff Walk</strong>（格林德瓦尔德）CHF 63 <span class="chip chip-purple">jungfrau.ch</span></div></div>
+  </div></div></div>
+
+  <div class="card" style="margin-bottom:16px"><div class="card-header" style="cursor:default"><div class="card-info"><div class="card-title" style="color:#9aa0a6">约不到</div></div></div><div class="card-body" style="max-height:none"><div class="card-content" style="padding:8px 20px">
+  <div style="padding:6px 0;font-size:14px;color:#9aa0a6;border-bottom:1px solid #f1f3f4">博尔盖塞美术馆 Galleria Borghese</div>
+  <div style="padding:6px 0;font-size:14px;color:#9aa0a6">圣母感恩教堂 Santa Maria delle Grazie（最后的晚餐）</div>
+  </div></div></div>
+</div>
+
+<!-- ========== BUDGET ========== -->
+<div class="panel" id="budget">
+  <div class="card" style="margin-bottom:16px"><div class="card-body" style="max-height:none"><div class="card-content" style="padding:0">
+  <table class="g-table">
+    <tr><th>项目</th><th>预估金额</th><th>≈ 人民币</th></tr>
+    <tr><td>国际机票（往返）</td><td>¥12,368</td><td>¥12,368</td></tr>
+    <tr><td>欧洲内航班（1程）</td><td>€50-90</td><td>¥400-730</td></tr>
+    <tr><td>意大利火车</td><td>€80-180</td><td>¥650-1,460</td></tr>
+    <tr><td>瑞士交通（含First缆车）</td><td>CHF 200-230</td><td>¥1,600-1,840</td></tr>
+    <tr><td>门票合计</td><td>€60-70</td><td>¥490-570</td></tr>
+    <tr><td>住宿（11晚）</td><td>€700-1,300</td><td>¥5,670-10,530</td></tr>
+    <tr><td>餐饮</td><td>€350-550</td><td>¥2,840-4,460</td></tr>
+    <tr><td>渡轮/南意交通</td><td>€60-80</td><td>¥490-650</td></tr>
+  </table>
+  </div></div></div>
+  <div class="budget-box">
+    <div class="budget-amount">约 ¥24,900 – 32,600 / 人</div>
+    <div class="budget-sub">按 €1≈¥8.1 · CHF 1≈¥8.0 换算，含机票</div>
+  </div>
+</div>
+
+<!-- ========== NOTES ========== -->
+<div class="panel" id="notes">
+  <div class="card" style="margin-bottom:16px"><div class="card-body" style="max-height:none"><div class="card-content" style="padding:0">
+  <table class="g-table">
+    <tr><th>事项</th><th>说明</th></tr>
+    <tr><td><strong>签证</strong></td><td>意大利申根签可自由进入瑞士</td></tr>
+    <tr><td><strong>货币</strong></td><td>意大利€欧元，瑞士CHF瑞郎（很多地方也收欧元）</td></tr>
+    <tr><td><strong>手机卡</strong></td><td>建议买欧洲通用 eSIM（覆盖意大利+瑞士）</td></tr>
+    <tr><td><strong>5月1日</strong></td><td>意大利劳动节，部分景点休息，当天安排在南意返程无影响</td></tr>
+    <tr><td><strong>佛罗伦萨周一</strong></td><td>博物馆闭馆！已避开（Day4 周日去）</td></tr>
+    <tr><td><strong>梵蒂冈周日</strong></td><td>博物馆闭馆！已安排周一去</td></tr>
+    <tr><td><strong>格林德瓦尔德</strong></td><td>5月初山上可能有残雪，穿防水鞋，带外套</td></tr>
+    <tr><td><strong>防盗</strong></td><td>罗马/那不勒斯注意扒手，尤其地铁和旅游景点</td></tr>
+    <tr><td><strong>廉航行李</strong></td><td>罗马→苏黎世如选 easyJet，手提包免费（45×36×20cm），大行李箱需额外购买</td></tr>
+    <tr><td><strong>DAY12 回程</strong></td><td>航班 12:45，务必预留足够时间从瑞士到米兰机场</td></tr>
+  </table>
+  </div></div></div>
+</div>
+
+<!-- ========== PACKING ========== -->
+<div class="panel" id="packing">
+  <div class="card" style="margin-bottom:16px"><div class="card-body" style="max-height:none"><div class="card-content" style="padding:4px 20px">
+
+  <div class="sub-title">📄 证件 & 文件</div>
+  <div class="check-item"><div class="check-box"></div><div class="check-text">护照</div></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-text">机票出行单（CX233/CX234）</div></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-text">行程单</div></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-text">酒店预订单</div></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-text">保险</div></div>
+
+  <div class="sub-title">📱 电子 & 通讯</div>
+  <div class="check-item"><div class="check-box"></div><div class="check-text">电话卡 / eSIM（欧洲通用）</div></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-text">充电宝 + 充电线</div></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-text">欧标转换插头（两脚圆头）</div></div>
+
+  <div class="sub-title">🔒 防盗 & 安全</div>
+  <div class="check-item"><div class="check-box"></div><div class="check-text">防盗锁</div></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-text">银行卡防刷卡套</div></div>
+
+  <div class="sub-title">🥾 徒步装备</div>
+  <div class="check-item"><div class="check-box"></div><div class="check-text">防水徒步鞋</div></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-text">外套 / 冲锋衣（瑞士山上 5-10°C）</div></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-text">防晒霜 + 墨镜</div></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-text">背包</div></div>
+
+  <div class="sub-title">👕 其他</div>
+  <div class="check-item"><div class="check-box"></div><div class="check-text">舒适走路鞋（罗马/佛罗伦萨暴走）</div></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-text">雨具（折叠伞）</div></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-text">颈枕 + 眼罩（长途飞行）</div></div>
+
+  </div></div></div>
+</div>
+
+</div><!-- end content -->
+
+<div class="footer">
+  Italy + Switzerland Travel Schedule · 13天 · CX233/CX234<br>
+  更新于 2026年4月7日
+</div>
+
+<script>
+// Set tabs sticky top to exact topbar height
+const topbar = document.querySelector('.topbar');
+const tabs = document.querySelector('.tabs');
+if(topbar && tabs) tabs.style.top = topbar.offsetHeight + 'px';
+
+// Tab switching
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.t).classList.add('active');
+  });
+});
+// Overview row click → jump to itinerary day
+document.querySelectorAll('.ov-item[data-day]').forEach(row=>{
+  row.addEventListener('click',()=>{
+    // Switch to itinerary tab
+    document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    document.querySelector('[data-t="itinerary"]').classList.add('active');
+    document.getElementById('itinerary').classList.add('active');
+    // Scroll to the day card
+    const target = document.getElementById(row.dataset.day);
+    if(target){
+      const card = target.closest('.card') || target;
+      setTimeout(()=>{
+        const topOffset = document.querySelector('.topbar').offsetHeight + document.querySelector('.tabs').offsetHeight + 12;
+        const y = card.getBoundingClientRect().top + window.scrollY - topOffset;
+        window.scrollTo({top: y, behavior:'smooth'});
+      },50);
+    }
+  });
+});
+
+// Checkbox toggle
+document.querySelectorAll('.check-box:not(.skip)').forEach(box=>{
+  box.addEventListener('click',()=>{
+    box.classList.toggle('done');
+    box.textContent = box.classList.contains('done') ? '✓' : '';
+  });
+});
+</script>
+</body>
+</html>
