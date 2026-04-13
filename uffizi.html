@@ -18,31 +18,46 @@ body{font-family:'Google Sans','Noto Sans SC',system-ui,-apple-system,sans-serif
 .topbar-sub{font-size:13px;color:#9aa0a6;font-weight:400}
 
 /* Info bar */
-.info-bar{background:#fff;padding:16px 20px;border-bottom:1px solid #e0e0e0;display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:#5f6368}
+.info-bar{background:#fff;padding:12px 20px;border-bottom:1px solid #e0e0e0;display:flex;gap:12px;flex-wrap:wrap;font-size:13px;color:#5f6368}
 .info-tag{display:flex;align-items:center;gap:4px}
 
 /* Route tip */
-.route-tip{background:#e8f0fe;border-radius:12px;margin:16px;padding:16px 20px;font-size:14px;color:#1a73e8;line-height:1.6}
+.route-tip{background:#e8f0fe;border-radius:12px;margin:12px;padding:14px 16px;font-size:13px;color:#1a73e8;line-height:1.6}
 .route-tip strong{font-weight:600}
 
 /* Content */
-.content{padding:0 16px 32px}
+.content{padding:0 12px 24px}
 
 /* Section */
-.floor-label{font-size:13px;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:1px;margin:24px 0 12px;padding-left:4px}
+.floor-label{font-size:12px;font-weight:700;color:#5f6368;text-transform:uppercase;letter-spacing:1px;margin:20px 0 10px;padding-left:4px}
 
-/* Card */
-.art-card{background:#fff;border-radius:12px;border:1px solid #e0e0e0;margin-bottom:16px;overflow:hidden}
-.art-img{width:100%;aspect-ratio:16/10;object-fit:cover;background:#f1f3f4;display:flex;align-items:center;justify-content:center;font-size:16px;color:#9aa0a6;text-align:center}
-.art-body{padding:16px 20px}
-.art-room{font-size:12px;font-weight:600;color:#1a73e8;margin-bottom:4px;letter-spacing:.5px}
-.art-name{font-size:17px;font-weight:700;color:#202124;margin-bottom:2px}
-.art-name-en{font-size:13px;color:#9aa0a6;margin-bottom:6px}
-.art-artist{font-size:14px;font-weight:500;color:#5f6368;margin-bottom:8px}
-.art-desc{font-size:14px;color:#3c4043;line-height:1.6}
+/* Grid — always 2 columns */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.art-card{background:#fff;border-radius:12px;border:1px solid #e0e0e0;overflow:hidden;cursor:pointer;transition:box-shadow .15s}
+.art-card:active{box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.art-img{width:100%;aspect-ratio:4/3;object-fit:cover;background:#f1f3f4;display:block}
+.art-body{padding:10px 12px 12px}
+.art-room{font-size:11px;font-weight:600;color:#1a73e8;margin-bottom:3px;letter-spacing:.3px}
+.art-name{font-size:15px;font-weight:700;color:#202124;margin-bottom:1px}
+.art-name-en{font-size:11px;color:#9aa0a6;margin-bottom:4px}
+.art-artist{font-size:12px;font-weight:500;color:#5f6368;margin-bottom:6px}
+.art-desc{font-size:12px;color:#3c4043;line-height:1.5}
+
+/* Detail overlay */
+.overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:flex-end;justify-content:center}
+.overlay.show{display:flex}
+.detail-sheet{background:#fff;border-radius:16px 16px 0 0;width:100%;max-width:640px;max-height:90vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.detail-img{width:100%;aspect-ratio:16/10;object-fit:cover;background:#f1f3f4;display:block}
+.detail-body{padding:16px 20px 24px}
+.detail-room{font-size:12px;font-weight:600;color:#1a73e8;margin-bottom:4px;letter-spacing:.3px}
+.detail-name{font-size:20px;font-weight:700;color:#202124;margin-bottom:2px}
+.detail-name-en{font-size:13px;color:#9aa0a6;margin-bottom:6px}
+.detail-artist{font-size:14px;font-weight:500;color:#5f6368;margin-bottom:12px}
+.detail-text{font-size:14px;color:#3c4043;line-height:1.7}
+.detail-close{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.4);border:none;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 
 /* Footer */
-.footer{text-align:center;padding:24px;font-size:12px;color:#9aa0a6}
+.footer{text-align:center;padding:20px;font-size:12px;color:#9aa0a6}
 </style>
 </head>
 <body>
@@ -70,102 +85,110 @@ body{font-family:'Google Sans','Noto Sans SC',system-ui,-apple-system,sans-serif
 
 <div class="floor-label">二楼 · 主展厅</div>
 
+<div class="grid">
+
 <!-- 1. 维纳斯的诞生 -->
-<div class="art-card">
-  <img class="art-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg/800px-Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg" alt="维纳斯的诞生" onerror="this.outerHTML='<div class=\'art-img\' style=\'aspect-ratio:16/10;background:#e8eaed;display:flex;align-items:center;justify-content:center;font-size:18px;color:#5f6368;font-weight:500\'>🐚 维纳斯的诞生</div>'">
+<div class="art-card" data-detail="乌菲兹镇馆之宝，真迹 172×278cm，近距离看细节极其精致。&#10;&#10;【画中人物·从左到右】&#10;&#10;🌬️ 左侧：风神泽菲罗斯（Zephyrus）— 西风之神，鼓起双颊吹出温暖春风，将维纳斯送向岸边。被他搂着的是花神克罗丽丝（Chloris），两人交缠在一起代表风与大地的结合。&#10;&#10;🐚 中间：维纳斯（Venus）— 刚从海中贝壳上诞生，赤身裸体站在巨大贝壳上。右手遮胸、左手拢发，姿态参考了古典雕塑"羞涩的维纳斯"。她的表情平静超脱，不属于凡间。&#10;&#10;🌸 右侧：时序女神荷拉（Hora）— 春天的化身，手持绣满鲜花的斗篷，准备为维纳斯披上。她脚下的花朵象征维纳斯带来了春天。&#10;&#10;波提切利用蛋彩画在画布上，当时非常少见（大多数画家用木板）。整幅画没有阴影，人物像漂浮在画面上，营造出梦幻般的神话氛围。">
+  <img class="art-img" src="img/venus.webp" alt="维纳斯的诞生">
   <div class="art-body">
     <div class="art-room">Room 10-14 · 波提切利大厅</div>
     <div class="art-name">维纳斯的诞生</div>
-    <div class="art-name-en">La nascita di Venere · 约1484-1486</div>
-    <div class="art-artist">桑德罗·波提切利 Sandro Botticelli</div>
-    <div class="art-desc">乌菲兹镇馆之宝。维纳斯从海中贝壳上诞生，被风神吹向岸边。画面优雅轻盈，色彩柔和，是文艺复兴最具标志性的形象之一。真迹比想象中大很多（172×278cm），近距离看细节极其精致。</div>
+    <div class="art-name-en">La nascita di Venere · 约1484</div>
+    <div class="art-artist">波提切利</div>
+    <div class="art-desc">镇馆之宝。维纳斯从贝壳上诞生，真迹 172×278cm。</div>
   </div>
 </div>
 
 <!-- 2. 春 -->
-<div class="art-card">
+<div class="art-card" data-detail="与《维纳斯的诞生》面对面悬挂，尺寸更大（203×314cm）。画中有500多种植物、190朵花。曾挂在美第奇家族私人卧室，18世纪才移到乌菲兹。&#10;&#10;【画中人物·从右到左共9位】&#10;&#10;🌬️ 最右：风神泽菲罗斯（Zephyrus）— 蓝灰色皮肤，鼓着脸从画外飞入，代表早春的西风。他正抓住旁边的宁芙。&#10;&#10;🌿 右二：宁芙克罗丽丝（Chloris）— 被风神追逐的大地仙女，嘴里吐出花朵，正在变身为花神。&#10;&#10;🌺 右三：花神弗洛拉（Flora）— 克罗丽丝变身后的样子，穿满花的长裙，满脸安详，撒花前行。代表春天的丰盛。&#10;&#10;👸 正中间：维纳斯（Venus）— 爱与美的女神，居中站立，微微抬手，像在欢迎观者进入她的花园。头顶丘比特蒙着眼射箭。&#10;&#10;💘 维纳斯上方：丘比特（Cupid）— 蒙着眼睛，弓箭瞄准三美神，象征爱情是盲目的。&#10;&#10;💃 左侧三位：三美神（Three Graces）— 分别代表美丽、贞洁、欢愉，手牵手翩翩起舞。她们薄纱若隐若现，姿态优雅。&#10;&#10;🪄 最左：墨丘利（Mercury）— 众神信使，举起蛇杖拨开天上的云雾，象征用理性驱散无知。他背对众人，望向天空。&#10;&#10;整幅画从右到左讲了一个故事：春风到来→大地开花→爱神主宰→欢愉起舞→理性升华。">
   <img class="art-img" src="img/primavera.jpg" alt="春">
   <div class="art-body">
     <div class="art-room">Room 10-14 · 波提切利大厅</div>
     <div class="art-name">春</div>
-    <div class="art-name-en">La Primavera · 约1477-1482</div>
-    <div class="art-artist">桑德罗·波提切利 Sandro Botticelli</div>
-    <div class="art-desc">与《维纳斯的诞生》面对面悬挂。画中描绘了500多种植物、190朵花，维纳斯居中，左侧三美神翩翩起舞，右侧花神撒花。寓意丰富，学者至今争论画中人物的真正含义。</div>
+    <div class="art-name-en">La Primavera · 约1477</div>
+    <div class="art-artist">波提切利</div>
+    <div class="art-desc">与《维纳斯》面对面。500多种植物、190朵花，三美神翩翩起舞。</div>
   </div>
 </div>
 
 <!-- 3. 天使报喜 -->
-<div class="art-card">
+<div class="art-card" data-detail="达芬奇 20 岁左右的作品，天使加百列向圣母玛利亚报告她将怀孕的消息。注意天使翅膀的细节——据考证是达芬奇根据真实鸟类翅膀绘制的。背景的远山用了他标志性的空气透视法。画面左下角的大理石桌台雕刻精细，展现了达芬奇年轻时就已经具备的超凡写实能力。这是他为数不多的早期完整作品之一。">
   <img class="art-img" src="img/annunciation.png" alt="天使报喜">
   <div class="art-body">
     <div class="art-room">Room 35 · 达芬奇厅</div>
     <div class="art-name">天使报喜</div>
-    <div class="art-name-en">Annunciazione · 约1472-1475</div>
-    <div class="art-artist">列奥纳多·达·芬奇 Leonardo da Vinci</div>
-    <div class="art-desc">达芬奇 20 岁左右的作品，天使加百列向圣母玛利亚报告她将怀孕的消息。注意天使翅膀的细节——据考证是达芬奇根据真实鸟类翅膀绘制的。背景的远山用了他标志性的空气透视法。</div>
+    <div class="art-name-en">Annunciazione · 约1472</div>
+    <div class="art-artist">达·芬奇</div>
+    <div class="art-desc">达芬奇 20 岁作品。翅膀参照真鸟翼，背景用空气透视法。</div>
   </div>
 </div>
 
 <!-- 4. 多尼圆形画 -->
-<div class="art-card">
-  <img class="art-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Michelangelo_Buonarroti_-_Tondo_Doni_-_Google_Art_Project.jpg/800px-Michelangelo_Buonarroti_-_Tondo_Doni_-_Google_Art_Project.jpg" alt="多尼圆形画" onerror="this.outerHTML='<div class=\'art-img\' style=\'aspect-ratio:1/1;background:#e8eaed;display:flex;align-items:center;justify-content:center;font-size:18px;color:#5f6368;font-weight:500\'>⭕ 多尼圆形画</div>'">
+<div class="art-card" data-detail="米开朗基罗唯一完成的木板画。圆形构图，圣母扭身接住婴儿耶稣的姿态充满力量感。色彩明亮鲜艳，人体肌肉线条分明——和西斯廷教堂天顶画是同一个味道。原始镀金画框也是珍品，上面雕刻着五个小头像。这幅画是米开朗基罗为佛罗伦萨富商多尼的婚礼所作，也是他唯一用蛋彩画在木板上的作品。">
+  <img class="art-img" src="img/tondo-doni.jpg" alt="多尼圆形画">
   <div class="art-body">
     <div class="art-room">Room 38 · 米开朗基罗厅</div>
-    <div class="art-name">多尼圆形画（圣家族）</div>
+    <div class="art-name">多尼圆形画</div>
     <div class="art-name-en">Tondo Doni · 约1507</div>
-    <div class="art-artist">米开朗基罗 Michelangelo</div>
-    <div class="art-desc">米开朗基罗唯一完成的木板画。圆形构图，圣母扭身接住婴儿耶稣的姿态充满力量感。色彩明亮鲜艳，人体肌肉线条分明——和西斯廷教堂天顶画是同一个味道。原始镀金画框也是珍品。</div>
+    <div class="art-artist">米开朗基罗</div>
+    <div class="art-desc">唯一完成的木板画。圆形构图，镀金原框也是珍品。</div>
   </div>
 </div>
 
 <!-- 5. 金翅雀圣母 -->
-<div class="art-card">
-  <img class="art-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Raffaello_Sanzio_-_Madonna_del_Cardellino_-_Google_Art_Project.jpg/600px-Raffaello_Sanzio_-_Madonna_del_Cardellino_-_Google_Art_Project.jpg" alt="金翅雀圣母" onerror="this.outerHTML='<div class=\'art-img\' style=\'aspect-ratio:3/4;background:#e8eaed;display:flex;align-items:center;justify-content:center;font-size:18px;color:#5f6368;font-weight:500\'>🐦 金翅雀圣母</div>'">
+<div class="art-card" data-detail="拉斐尔最温柔的圣母像之一。圣母坐在草地上，小耶稣抚摸施洗约翰手中的金翅雀（象征受难）。画面宁静和谐，三角形构图完美。1547年曾被地震震碎成17块后修复，至今可见裂痕。拉斐尔画这幅画时年仅23岁，正在佛罗伦萨学习达芬奇和米开朗基罗的技法，画中可以看到达芬奇式柔和光线的影响。">
+  <img class="art-img" src="img/madonna-cardellino.webp" alt="金翅雀圣母">
   <div class="art-body">
     <div class="art-room">Room 66 · 拉斐尔厅</div>
     <div class="art-name">金翅雀圣母</div>
     <div class="art-name-en">Madonna del Cardellino · 约1506</div>
-    <div class="art-artist">拉斐尔 Raffaello Sanzio</div>
-    <div class="art-desc">拉斐尔最温柔的圣母像之一。圣母坐在草地上，小耶稣抚摸施洗约翰手中的金翅雀（象征受难）。画面宁静和谐，三角形构图完美。1547年曾被地震震碎成17块后修复，至今可见裂痕。</div>
+    <div class="art-artist">拉斐尔</div>
+    <div class="art-desc">最温柔的圣母像。曾震碎17块后修复，至今可见裂痕。</div>
   </div>
 </div>
 
 <!-- 6. 乌尔比诺的维纳斯 -->
-<div class="art-card">
+<div class="art-card" data-detail="西方艺术史上最著名的裸体画之一。维纳斯侧卧在床上，目光直视观者。马克·吐温参观后称之为"世界上最下流、最令人厌恶、最淫秽的画"——但正是这种大胆直率让它成为不朽经典。马奈的《奥林匹亚》直接以此为灵感。画面右侧两个侍女正在翻箱找衣服，窗台上有一盆桃金娘（爱情的象征），小狗蜷在维纳斯脚边象征忠诚。">
   <img class="art-img" src="img/venus-urbino.jpg" alt="乌尔比诺的维纳斯">
   <div class="art-body">
     <div class="art-room">Room 83 · 提香厅</div>
     <div class="art-name">乌尔比诺的维纳斯</div>
     <div class="art-name-en">Venere di Urbino · 1538</div>
-    <div class="art-artist">提香 Tiziano Vecellio</div>
-    <div class="art-desc">西方艺术史上最著名的裸体画之一。维纳斯侧卧在床上，目光直视观者。马克·吐温称之为"世界上最下流、最令人厌恶、最淫秽的画"——但正是这种大胆直率让它成为不朽经典。马奈《奥林匹亚》的直接灵感来源。</div>
+    <div class="art-artist">提香</div>
+    <div class="art-desc">西方最著名裸体画之一。马奈《奥林匹亚》的直接灵感来源。</div>
   </div>
+</div>
+
 </div>
 
 <div class="floor-label">一楼</div>
 
+<div class="grid">
+
 <!-- 7. 美杜莎 -->
-<div class="art-card">
+<div class="art-card" data-detail="画在一面凸圆木盾上（不是普通画布）。美杜莎被砍下头的瞬间，表情惊恐，蛇发扭动，鲜血淋漓。据说卡拉瓦乔用自己的脸做模特。这幅画原是红衣主教德尔·蒙特送给美第奇大公的礼物，被当作装饰盾牌展示。卡拉瓦乔巧妙利用木盾的凸面，让美杜莎的头像看起来像是从盾面上浮出来，极具戏剧张力。">
   <img class="art-img" src="img/medusa.png" alt="美杜莎">
   <div class="art-body">
     <div class="art-room">Room 90 · 卡拉瓦乔厅</div>
     <div class="art-name">美杜莎</div>
     <div class="art-name-en">Medusa · 约1597</div>
-    <div class="art-artist">卡拉瓦乔 Caravaggio</div>
-    <div class="art-desc">画在一面凸圆木盾上（不是普通画布）。美杜莎被砍下头的瞬间，表情惊恐，蛇发扭动，鲜血淋漓。据说卡拉瓦乔用自己的脸做模特。这幅画原是美第奇家族的礼物，极具戏剧张力。</div>
+    <div class="art-artist">卡拉瓦乔</div>
+    <div class="art-desc">画在凸圆木盾上。据说用自己的脸做模特。</div>
   </div>
 </div>
 
 <!-- 8. 酒神巴克斯 -->
-<div class="art-card">
+<div class="art-card" data-detail="微醺的酒神手持酒杯，眼神迷离地望向观者，仿佛在邀你共饮。桌上的水果篮极其写实，甚至能看到腐烂的痕迹——这是卡拉瓦乔对"万物皆有时"的隐喻。X光扫描曾发现画面左下角酒壶的反光中藏着卡拉瓦乔的自画像。与美杜莎同室展出，都是卡拉瓦乔早期在罗马的作品。">
   <img class="art-img" src="img/bacchus.png" alt="酒神巴克斯">
   <div class="art-body">
     <div class="art-room">Room 90 · 卡拉瓦乔厅</div>
     <div class="art-name">酒神巴克斯</div>
-    <div class="art-name-en">Bacco · 约1596-1597</div>
-    <div class="art-artist">卡拉瓦乔 Caravaggio</div>
-    <div class="art-desc">微醺的酒神手持酒杯，眼神迷离地望向观者，仿佛在邀你共饮。桌上的水果篮极其写实，甚至能看到腐烂的痕迹。X光扫描曾发现画面左下角藏着卡拉瓦乔的自画像。与美杜莎同室展出。</div>
+    <div class="art-name-en">Bacco · 约1596</div>
+    <div class="art-artist">卡拉瓦乔</div>
+    <div class="art-desc">微醺酒神邀你共饮。X光发现藏着自画像。</div>
   </div>
+</div>
+
 </div>
 
 </div>
@@ -173,6 +196,46 @@ body{font-family:'Google Sans','Noto Sans SC',system-ui,-apple-system,sans-serif
 <div class="footer">
   乌菲兹美术馆 · Galleria degli Uffizi · DAY4 4/26
 </div>
+
+<!-- Detail overlay -->
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeDetail()">
+  <div class="detail-sheet" id="detailSheet">
+    <div style="position:relative">
+      <img class="detail-img" id="detailImg">
+      <button class="detail-close" onclick="closeDetail()">✕</button>
+    </div>
+    <div class="detail-body">
+      <div class="detail-room" id="detailRoom"></div>
+      <div class="detail-name" id="detailName"></div>
+      <div class="detail-name-en" id="detailNameEn"></div>
+      <div class="detail-artist" id="detailArtist"></div>
+      <div class="detail-text" id="detailText"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function openDetail(card){
+  var img = card.querySelector('.art-img');
+  var body = card.querySelector('.art-body');
+  document.getElementById('detailImg').src = img.src;
+  document.getElementById('detailRoom').textContent = body.querySelector('.art-room').textContent;
+  document.getElementById('detailName').textContent = body.querySelector('.art-name').textContent;
+  document.getElementById('detailNameEn').textContent = body.querySelector('.art-name-en').textContent;
+  document.getElementById('detailArtist').textContent = body.querySelector('.art-artist').textContent;
+  document.getElementById('detailText').textContent = card.dataset.detail;
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('detailSheet').scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+function closeDetail(){
+  document.getElementById('overlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+document.querySelectorAll('.art-card').forEach(function(card){
+  card.addEventListener('click', function(){ openDetail(card); });
+});
+</script>
 
 </body>
 </html>
