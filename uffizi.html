@@ -11,8 +11,9 @@ body{font-family:'Google Sans','Noto Sans SC',system-ui,-apple-system,sans-serif
 
 /* Top bar */
 .topbar{position:sticky;top:0;z-index:100;background:#fff;padding:14px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #e0e0e0}
-.back-btn{width:36px;height:36px;border-radius:50%;border:none;background:none;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#5f6368;transition:background .15s}
+.back-btn{width:36px;height:36px;border-radius:50%;border:none;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;flex-shrink:0;padding:0}
 .back-btn:hover{background:#f1f3f4}
+.back-btn svg{width:20px;height:20px;fill:#5f6368}
 .topbar-title{font-size:18px;font-weight:700;color:#202124;flex:1}
 .topbar-sub{font-size:13px;color:#9aa0a6;font-weight:400}
 
@@ -32,7 +33,7 @@ body{font-family:'Google Sans','Noto Sans SC',system-ui,-apple-system,sans-serif
 
 /* Card */
 .art-card{background:#fff;border-radius:12px;border:1px solid #e0e0e0;margin-bottom:16px;overflow:hidden}
-.art-img{width:100%;aspect-ratio:16/10;object-fit:cover;background:#f1f3f4;display:block}
+.art-img{width:100%;aspect-ratio:16/10;object-fit:cover;background:#f1f3f4;display:flex;align-items:center;justify-content:center;font-size:16px;color:#9aa0a6;text-align:center}
 .art-body{padding:16px 20px}
 .art-room{font-size:12px;font-weight:600;color:#1a73e8;margin-bottom:4px;letter-spacing:.5px}
 .art-name{font-size:17px;font-weight:700;color:#202124;margin-bottom:2px}
@@ -47,7 +48,7 @@ body{font-family:'Google Sans','Noto Sans SC',system-ui,-apple-system,sans-serif
 <body>
 
 <div class="topbar">
-  <button class="back-btn" onclick="history.back()">←</button>
+  <button class="back-btn" onclick="history.back()"><svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg></button>
   <div>
     <div class="topbar-title">乌菲兹美术馆</div>
     <div class="topbar-sub">Galleria degli Uffizi · DAY4 4/26 8:45</div>
@@ -71,7 +72,7 @@ body{font-family:'Google Sans','Noto Sans SC',system-ui,-apple-system,sans-serif
 
 <!-- 1. 维纳斯的诞生 -->
 <div class="art-card">
-  <img class="art-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg/1280px-Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg" alt="维纳斯的诞生">
+  <img class="art-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg/800px-Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg" alt="维纳斯的诞生" onerror="this.outerHTML='<div class=\'art-img\' style=\'aspect-ratio:16/10;background:#e8eaed;display:flex;align-items:center;justify-content:center;font-size:18px;color:#5f6368;font-weight:500\'>🐚 维纳斯的诞生</div>'">
   <div class="art-body">
     <div class="art-room">Room 10-14 · 波提切利大厅</div>
     <div class="art-name">维纳斯的诞生</div>
@@ -83,7 +84,7 @@ body{font-family:'Google Sans','Noto Sans SC',system-ui,-apple-system,sans-serif
 
 <!-- 2. 春 -->
 <div class="art-card">
-  <img class="art-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Botticelli-primavera.jpg/1280px-Botticelli-primavera.jpg" alt="春">
+  <img class="art-img" src="img/primavera.jpg" alt="春">
   <div class="art-body">
     <div class="art-room">Room 10-14 · 波提切利大厅</div>
     <div class="art-name">春</div>
@@ -95,7 +96,7 @@ body{font-family:'Google Sans','Noto Sans SC',system-ui,-apple-system,sans-serif
 
 <!-- 3. 天使报喜 -->
 <div class="art-card">
-  <img class="art-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Leonardo_da_Vinci_-_Annunciazione_-_Google_Art_Project.jpg/1280px-Leonardo_da_Vinci_-_Annunciazione_-_Google_Art_Project.jpg" alt="天使报喜">
+  <img class="art-img" src="img/annunciation.png" alt="天使报喜">
   <div class="art-body">
     <div class="art-room">Room 35 · 达芬奇厅</div>
     <div class="art-name">天使报喜</div>
@@ -107,7 +108,7 @@ body{font-family:'Google Sans','Noto Sans SC',system-ui,-apple-system,sans-serif
 
 <!-- 4. 多尼圆形画 -->
 <div class="art-card">
-  <img class="art-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Michelangelo_Buonarroti_-_Tondo_Doni_-_Google_Art_Project.jpg/1024px-Michelangelo_Buonarroti_-_Tondo_Doni_-_Google_Art_Project.jpg" alt="多尼圆形画">
+  <img class="art-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Michelangelo_Buonarroti_-_Tondo_Doni_-_Google_Art_Project.jpg/800px-Michelangelo_Buonarroti_-_Tondo_Doni_-_Google_Art_Project.jpg" alt="多尼圆形画" onerror="this.outerHTML='<div class=\'art-img\' style=\'aspect-ratio:1/1;background:#e8eaed;display:flex;align-items:center;justify-content:center;font-size:18px;color:#5f6368;font-weight:500\'>⭕ 多尼圆形画</div>'">
   <div class="art-body">
     <div class="art-room">Room 38 · 米开朗基罗厅</div>
     <div class="art-name">多尼圆形画（圣家族）</div>
@@ -119,7 +120,7 @@ body{font-family:'Google Sans','Noto Sans SC',system-ui,-apple-system,sans-serif
 
 <!-- 5. 金翅雀圣母 -->
 <div class="art-card">
-  <img class="art-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Raffaello_Sanzio_-_Madonna_del_Cardellino_-_Google_Art_Project.jpg/800px-Raffaello_Sanzio_-_Madonna_del_Cardellino_-_Google_Art_Project.jpg" alt="金翅雀圣母">
+  <img class="art-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Raffaello_Sanzio_-_Madonna_del_Cardellino_-_Google_Art_Project.jpg/600px-Raffaello_Sanzio_-_Madonna_del_Cardellino_-_Google_Art_Project.jpg" alt="金翅雀圣母" onerror="this.outerHTML='<div class=\'art-img\' style=\'aspect-ratio:3/4;background:#e8eaed;display:flex;align-items:center;justify-content:center;font-size:18px;color:#5f6368;font-weight:500\'>🐦 金翅雀圣母</div>'">
   <div class="art-body">
     <div class="art-room">Room 66 · 拉斐尔厅</div>
     <div class="art-name">金翅雀圣母</div>
@@ -131,7 +132,7 @@ body{font-family:'Google Sans','Noto Sans SC',system-ui,-apple-system,sans-serif
 
 <!-- 6. 乌尔比诺的维纳斯 -->
 <div class="art-card">
-  <img class="art-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Tiziano_-_Venere_di_Urbino_-_Google_Art_Project.jpg/1280px-Tiziano_-_Venere_di_Urbino_-_Google_Art_Project.jpg" alt="乌尔比诺的维纳斯">
+  <img class="art-img" src="img/venus-urbino.jpg" alt="乌尔比诺的维纳斯">
   <div class="art-body">
     <div class="art-room">Room 83 · 提香厅</div>
     <div class="art-name">乌尔比诺的维纳斯</div>
@@ -145,7 +146,7 @@ body{font-family:'Google Sans','Noto Sans SC',system-ui,-apple-system,sans-serif
 
 <!-- 7. 美杜莎 -->
 <div class="art-card">
-  <img class="art-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Medusa_by_Carvaggio.jpg/800px-Medusa_by_Carvaggio.jpg" alt="美杜莎">
+  <img class="art-img" src="img/medusa.png" alt="美杜莎">
   <div class="art-body">
     <div class="art-room">Room 90 · 卡拉瓦乔厅</div>
     <div class="art-name">美杜莎</div>
@@ -157,7 +158,7 @@ body{font-family:'Google Sans','Noto Sans SC',system-ui,-apple-system,sans-serif
 
 <!-- 8. 酒神巴克斯 -->
 <div class="art-card">
-  <img class="art-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Bacchus_by_Caravaggio.jpg/800px-Bacchus_by_Caravaggio.jpg" alt="酒神巴克斯">
+  <img class="art-img" src="img/bacchus.png" alt="酒神巴克斯">
   <div class="art-body">
     <div class="art-room">Room 90 · 卡拉瓦乔厅</div>
     <div class="art-name">酒神巴克斯</div>
