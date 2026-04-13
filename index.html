@@ -130,6 +130,13 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
   .tab{padding:10px 14px;font-size:13px}
   .g-table{font-size:13px}
   .g-table th,.g-table td{padding:8px}
+  #transport .g-table th:nth-child(4),
+  #transport .g-table td:nth-child(4),
+  #transport .g-table colgroup col:nth-child(4){display:none}
+  #transport .g-table colgroup col:nth-child(1){width:42%!important}
+  #transport .g-table colgroup col:nth-child(2){width:16%!important}
+  #transport .g-table colgroup col:nth-child(3){width:24%!important}
+  #transport .g-table colgroup col:nth-child(5){width:18%!important}
 }
 </style>
 </head>
@@ -196,7 +203,6 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>中央市场</strong> Mercato Centrale <span class="chip chip-green">免费</span><br><span class="sub">二楼美食广场，牛肚包/手工意面</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>圣十字大殿</strong> Basilica di Santa Croce<br><span class="sub">但丁/伽利略/米开朗基罗墓 ~€8</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>米开朗基罗广场</strong> <span class="chip chip-green">免费</span><br><span class="sub">傍晚看日落全景</span></div></div>
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>晚餐推荐 T-bone 牛排</strong></div></div>
     <div class="callout callout-info"><div class="callout-text">Malpensa Express → trenord.it · 高铁 → trenitalia.com 或 italotreno.it</div></div>
   </div></div></div>
 
@@ -465,14 +471,38 @@ const tabs = document.querySelector('.tabs');
 if(topbar && tabs) tabs.style.top = topbar.offsetHeight + 'px';
 
 // Tab switching
-document.querySelectorAll('.tab').forEach(t=>{
-  t.addEventListener('click',()=>{
-    document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
-    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-    t.classList.add('active');
-    document.getElementById(t.dataset.t).classList.add('active');
-  });
+const allTabs = Array.from(document.querySelectorAll('.tab'));
+const allPanels = Array.from(document.querySelectorAll('.panel'));
+function switchToTab(idx){
+  if(idx<0||idx>=allTabs.length) return;
+  allTabs.forEach(b=>b.classList.remove('active'));
+  allPanels.forEach(p=>p.classList.remove('active'));
+  allTabs[idx].classList.add('active');
+  document.getElementById(allTabs[idx].dataset.t).classList.add('active');
+  allTabs[idx].scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+  window.scrollTo({top:0});
+}
+allTabs.forEach((t,i)=>{
+  t.addEventListener('click',()=>switchToTab(i));
 });
+
+// Touch swipe to switch tabs
+let touchStartX=0, touchStartY=0, touchStartTime=0;
+document.addEventListener('touchstart',e=>{
+  touchStartX=e.touches[0].clientX;
+  touchStartY=e.touches[0].clientY;
+  touchStartTime=Date.now();
+},{passive:true});
+document.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-touchStartX;
+  const dy=e.changedTouches[0].clientY-touchStartY;
+  const dt=Date.now()-touchStartTime;
+  if(Math.abs(dx)>60 && Math.abs(dx)>Math.abs(dy)*1.5 && dt<400){
+    const cur=allTabs.findIndex(t=>t.classList.contains('active'));
+    if(dx<0) switchToTab(cur+1); // swipe left → next
+    else switchToTab(cur-1);     // swipe right → prev
+  }
+},{passive:true});
 // Overview row click → jump to itinerary day
 document.querySelectorAll('.ov-item[data-day]').forEach(row=>{
   row.addEventListener('click',()=>{
