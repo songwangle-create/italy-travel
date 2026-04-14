@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="apple-touch-icon" href="img/icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Italy Travel">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>Italy Travel Schedule</title>
 <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -78,6 +82,7 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
 .g-table td{text-align:left;padding:10px 12px;border-bottom:1px solid #e0e0e0;color:#111;vertical-align:middle;line-height:1.5}
 .g-table tr:last-child td{border-bottom:none}
 .g-table tr:hover td{background:#f8f9fa}
+.g-table tr[data-day]{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .g-table th:first-child,.g-table td:first-child{padding-left:20px}
 .g-table th:last-child,.g-table td:last-child{padding-right:20px}
 
@@ -222,10 +227,7 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>佛罗伦萨→罗马</strong> <span class="chip chip-blue">Klook 已购</span><br><span class="sub">Firenze S.M.N. → Roma Termini，13:28-15:10，Italo，电子票</span></div></div>
     <div class="section-label">下午 — 罗马</div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>入住罗马</strong></div></div>
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>西班牙广场</strong> <span class="chip chip-green">免费</span></div></div>
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>万神殿</strong> <span class="chip chip-yellow">Klook提前2天 €5</span></div></div>
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>纳沃纳广场</strong> <span class="chip chip-green">免费</span><br><span class="sub">四河喷泉</span></div></div>
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>特雷维喷泉</strong> <span class="chip chip-green">免费</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>西班牙广场</strong> <span class="chip chip-green">免费</span><br><span class="sub">Termini 附近，傍晚散步</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>晚餐在 Trastevere 区</strong></div></div>
   </div></div></div>
 
@@ -237,14 +239,16 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>圣天使堡</strong><br><span class="sub">外观拍照</span></div></div>
     <div class="section-label">下午 15:45 — 斗兽场</div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>斗兽场 + 古罗马广场 + 帕拉蒂尼山</strong> <span class="chip chip-blue">Klook 已购</span><br><span class="sub">15:45 入场，联票3景点，约2-3h</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>真理之口</strong> <span class="chip chip-green">免费</span><br><span class="sub">斗兽场旁步行10min，希腊圣母堂门口</span></div></div>
     <div class="callout callout-info"><div class="callout-text">梵蒂冈博物馆周日闭馆，安排周一。穿舒适鞋子，整天走路很多</div></div>
   </div></div></div>
 
   <!-- D6 -->
   <div class="card open"><div class="card-header" onclick="this.parentElement.classList.toggle('open')"><div class="card-dot dot-green"></div><div class="card-info"><div id="d6" class="card-day">DAY 6 · 4/28 周二</div><div class="card-title">罗马 → 索伦托</div></div><div class="card-chevron">▾</div></div><div class="card-body"><div class="card-content">
-    <div class="section-label">上午 — 罗马自由安排</div>
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>真理之口</strong> <span class="chip chip-green">免费</span></div></div>
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>睡到自然醒 / 附近逛逛</strong><br><span class="sub">备选：纳沃纳广场 / 博尔盖塞美术馆</span></div></div>
+    <div class="section-label">上午 — 罗马景点</div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>万神殿</strong> <span class="chip chip-yellow">Klook提前2天 €5</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>纳沃纳广场</strong> <span class="chip chip-green">免费</span><br><span class="sub">四河喷泉</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>特雷维喷泉</strong> <span class="chip chip-green">免费</span></div></div>
     <div class="section-label">下午 → 索伦托</div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>罗马→那不勒斯</strong> <span class="chip chip-blue">Klook 已购</span><br><span class="sub">Roma Termini → Napoli Centrale，13:40-14:53，Italo，电子票</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>那不勒斯→索伦托</strong><br><span class="sub">Circumvesuviana 约1h，注意看管随身物品</span></div></div>
@@ -277,8 +281,8 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>乔瓦娜女王浴场</strong><br><span class="sub">步行约30-40min，天然海水泳池+古罗马遗迹，建议早上去</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>中午回索伦托午餐，退房</strong></div></div>
     <div class="section-label">下午 — 返回佛罗伦萨</div>
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>Sorrento → Napoli</strong><br><span class="sub">Circumvesuviana 约1h</span></div></div>
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>Napoli → Firenze</strong><br><span class="sub">高铁约3h</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>索伦托→那不勒斯</strong><br><span class="sub">Circumvesuviana 约1h</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>那不勒斯→佛罗伦萨</strong> <span class="chip chip-blue">Klook 已购</span><br><span class="sub">Napoli Centrale → Firenze S.M.N.，15:40-18:46，Trenitalia，电子票</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>入住佛罗伦萨</strong></div></div>
     <div class="callout callout-info"><div class="callout-text">5月1日意大利劳动节，火车正常运营。提前买好高铁票</div></div>
   </div></div></div>
@@ -345,7 +349,9 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
       <div class="card-title">罗马</div>
     </div>
   </div><div class="card-body" style="max-height:none"><div class="card-content">
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>待定</strong><br><span class="sub">建议 Termini 站或西班牙广场附近</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>Airbnb 民宿</strong><br><span class="sub">Via Urbana, 12, Rome, Lazio 00184</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>入住 15:00</strong><br><span class="sub">退房 10:00 前</span></div></div>
+    <div style="padding:4px 0 8px"><a class="view-link" href="https://www.airbnb.com/l/B5f2N668" target="_blank" rel="noopener" style="font-size:14px;text-decoration:none">查看详情 →</a></div>
   </div></div></div>
 
   <!-- 索伦托 4/28-5/1 -->
@@ -356,29 +362,35 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
       <div class="card-title">索伦托</div>
     </div>
   </div><div class="card-body" style="max-height:none"><div class="card-content">
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>待定</strong><br><span class="sub">索伦托小镇中心</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>Airbnb 民宿</strong><br><span class="sub">Via degli Aranci, 67, Sorrento, Campania 80067</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>入住 15:00</strong><br><span class="sub">退房 10:00 前</span></div></div>
+    <div style="padding:4px 0 8px"><a class="view-link" href="https://www.airbnb.com/l/4doaxTHY" target="_blank" rel="noopener" style="font-size:14px;text-decoration:none">查看详情 →</a></div>
   </div></div></div>
 
-  <!-- 佛罗伦萨 5/1 -->
+  <!-- 佛罗伦萨 5/1-2 -->
   <div class="card open"><div class="card-header" style="cursor:default">
     <div class="card-dot dot-green"></div>
     <div class="card-info">
-      <div class="card-day">5/1 · 1晚</div>
+      <div class="card-day">5/1 – 5/2 · 1晚</div>
       <div class="card-title">佛罗伦萨</div>
     </div>
   </div><div class="card-body" style="max-height:none"><div class="card-content">
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>待定</strong><br><span class="sub">S.M.N. 火车站附近</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>Airbnb 民宿</strong><br><span class="sub">Via Francesco Landini, 9, Florence, Tuscany 50144</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>入住 16:00</strong><br><span class="sub">退房 10:00 前</span></div></div>
+    <div style="padding:4px 0 8px"><a class="view-link" href="https://www.airbnb.com/l/XbePlUdU" target="_blank" rel="noopener" style="font-size:14px;text-decoration:none">查看详情 →</a></div>
   </div></div></div>
 
-  <!-- 米兰 5/2-3 -->
+  <!-- 米兰 5/2-4 -->
   <div class="card open"><div class="card-header" style="cursor:default">
     <div class="card-dot dot-green"></div>
     <div class="card-info">
-      <div class="card-day">5/2 – 5/3 · 2晚</div>
+      <div class="card-day">5/2 – 5/4 · 2晚</div>
       <div class="card-title">米兰</div>
     </div>
   </div><div class="card-body" style="max-height:none"><div class="card-content">
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>待定</strong><br><span class="sub">Milano Centrale 附近，方便去机场</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>Airbnb 民宿</strong><br><span class="sub">Via Napo Torriani, 1, Milan, Lombardy 20124</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>入住 15:00</strong><br><span class="sub">退房 10:00 前</span></div></div>
+    <div style="padding:4px 0 8px"><a class="view-link" href="https://www.airbnb.com/l/2m0PBaxf" target="_blank" rel="noopener" style="font-size:14px;text-decoration:none">查看详情 →</a></div>
   </div></div></div>
 
 </div>
@@ -392,16 +404,16 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
     <table class="g-table" style="table-layout:fixed">
       <colgroup><col style="width:40%"><col style="width:12%"><col style="width:16%"><col style="width:20%"><col style="width:12%"></colgroup>
       <tr><th>路线</th><th>时长</th><th>参考价</th><th>平台</th><th>状态</th></tr>
-      <tr><td>米兰机场→市区<br><span class="sub">Malpensa Express</span></td><td>50min</td><td>€15</td><td>trenord.it</td><td><span class="chip chip-green">现场</span></td></tr>
-      <tr><td>米兰→佛罗伦萨<br><span class="sub">Italo</span></td><td>1h55m</td><td>¥515/人</td><td>Klook</td><td><span class="chip chip-blue">已购</span></td></tr>
-      <tr><td>佛罗伦萨→罗马<br><span class="sub">Italo</span></td><td>1h42m</td><td>¥257/人</td><td>Klook</td><td><span class="chip chip-blue">已购</span></td></tr>
-      <tr><td>罗马→那不勒斯<br><span class="sub">Italo</span></td><td>1h13m</td><td>¥197/人</td><td>Klook</td><td><span class="chip chip-blue">已购</span></td></tr>
-      <tr><td>那不勒斯→索伦托<br><span class="sub">Circumvesuviana</span></td><td>1h</td><td>€4.40</td><td>现场购票</td><td><span class="chip chip-green">现场</span></td></tr>
-      <tr><td>那不勒斯→佛罗伦萨<br><span class="sub">Frecciarossa / Italo</span></td><td>3h</td><td>€25-60</td><td>trenitalia / italo</td><td><span class="chip chip-yellow">待购</span></td></tr>
-      <tr><td>佛罗伦萨→比萨<br><span class="sub">Regionale 慢车</span></td><td>1h</td><td>€8.70</td><td>trenitalia / 现场</td><td><span class="chip chip-green">现场</span></td></tr>
-      <tr><td>比萨→佛罗伦萨<br><span class="sub">Regionale 慢车</span></td><td>1h</td><td>€8.70</td><td>trenitalia / 现场</td><td><span class="chip chip-green">现场</span></td></tr>
-      <tr><td>佛罗伦萨→米兰<br><span class="sub">Frecciarossa / Italo</span></td><td>1h50m</td><td>€29-65</td><td>trenitalia / italo</td><td><span class="chip chip-yellow">待购</span></td></tr>
-      <tr><td>米兰市区→机场<br><span class="sub">Malpensa Express</span></td><td>50min</td><td>€15</td><td>trenord.it</td><td><span class="chip chip-green">现场</span></td></tr>
+      <tr data-day="d2"><td>米兰机场→市区<br><span class="sub">Malpensa Express</span></td><td>50min</td><td>€15</td><td>trenord.it</td><td><span class="chip chip-green">现场</span></td></tr>
+      <tr data-day="d2"><td>米兰→佛罗伦萨<br><span class="sub">Italo</span></td><td>1h55m</td><td>¥515/人</td><td>Klook</td><td><span class="chip chip-blue">已购</span></td></tr>
+      <tr data-day="d4"><td>佛罗伦萨→罗马<br><span class="sub">Italo</span></td><td>1h42m</td><td>¥257/人</td><td>Klook</td><td><span class="chip chip-blue">已购</span></td></tr>
+      <tr data-day="d6"><td>罗马→那不勒斯<br><span class="sub">Italo</span></td><td>1h13m</td><td>¥197/人</td><td>Klook</td><td><span class="chip chip-blue">已购</span></td></tr>
+      <tr data-day="d6"><td>那不勒斯→索伦托<br><span class="sub">Circumvesuviana</span></td><td>1h</td><td>€4.40</td><td>现场购票</td><td><span class="chip chip-green">现场</span></td></tr>
+      <tr data-day="d9"><td>那不勒斯→佛罗伦萨<br><span class="sub">Trenitalia</span></td><td>3h06m</td><td>¥326/人</td><td>Klook</td><td><span class="chip chip-blue">已购</span></td></tr>
+      <tr data-day="d10"><td>佛罗伦萨→比萨<br><span class="sub">Regionale 慢车</span></td><td>1h</td><td>€8.70</td><td>trenitalia / 现场</td><td><span class="chip chip-green">现场</span></td></tr>
+      <tr data-day="d10"><td>比萨→佛罗伦萨<br><span class="sub">Regionale 慢车</span></td><td>1h</td><td>€8.70</td><td>trenitalia / 现场</td><td><span class="chip chip-green">现场</span></td></tr>
+      <tr data-day="d10"><td>佛罗伦萨→米兰<br><span class="sub">Frecciarossa / Italo</span></td><td>1h50m</td><td>€29-65</td><td>trenitalia / italo</td><td><span class="chip chip-yellow">待购</span></td></tr>
+      <tr data-day="d12"><td>米兰市区→机场<br><span class="sub">Malpensa Express</span></td><td>50min</td><td>€15</td><td>trenord.it</td><td><span class="chip chip-green">现场</span></td></tr>
     </table>
   </div></div></div>
 
@@ -411,8 +423,8 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
     <table class="g-table" style="table-layout:fixed">
       <colgroup><col style="width:40%"><col style="width:12%"><col style="width:16%"><col style="width:20%"><col style="width:12%"></colgroup>
       <tr><th>路线</th><th>时长</th><th>参考价</th><th>平台</th><th>状态</th></tr>
-      <tr><td>香港→米兰</td><td>12h</td><td>¥12,368/人</td><td>国泰</td><td><span class="chip chip-blue">已购</span></td></tr>
-      <tr><td>米兰→香港</td><td>12h</td><td>含往返</td><td>国泰</td><td><span class="chip chip-blue">已购</span></td></tr>
+      <tr data-day="d1"><td>香港→米兰</td><td>12h</td><td>¥12,368/人</td><td>国泰</td><td><span class="chip chip-blue">已购</span></td></tr>
+      <tr data-day="d12"><td>米兰→香港</td><td>12h</td><td>含往返</td><td>国泰</td><td><span class="chip chip-blue">已购</span></td></tr>
     </table>
   </div></div></div>
 
@@ -422,11 +434,11 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
     <table class="g-table" style="table-layout:fixed">
       <colgroup><col style="width:40%"><col style="width:12%"><col style="width:16%"><col style="width:20%"><col style="width:12%"></colgroup>
       <tr><th>路线</th><th>时长</th><th>参考价</th><th>平台</th><th>状态</th></tr>
-      <tr><td>索伦托→阿马尔菲<br><span class="sub">诸神之路去程</span></td><td>40min</td><td>€12-15</td><td>码头现场</td><td><span class="chip chip-green">现场</span></td></tr>
-      <tr><td>阿马尔菲→Bomerano<br><span class="sub">SITA 5070巴士</span></td><td>25min</td><td>€1.30</td><td>车上购票</td><td><span class="chip chip-green">现场</span></td></tr>
-      <tr><td>索伦托→卡普里</td><td>30min</td><td>€20-25</td><td>caremar.it</td><td><span class="chip chip-green">现场</span></td></tr>
-      <tr><td>卡普里→索伦托</td><td>30min</td><td>€20-25</td><td>caremar.it</td><td><span class="chip chip-green">现场</span></td></tr>
-      <tr><td>波西塔诺→索伦托<br><span class="sub">诸神之路回程</span></td><td>30min</td><td>€18-20</td><td>码头现场</td><td><span class="chip chip-green">现场</span></td></tr>
+      <tr data-day="d7"><td>索伦托→阿马尔菲<br><span class="sub">诸神之路去程</span></td><td>40min</td><td>€12-15</td><td>码头现场</td><td><span class="chip chip-green">现场</span></td></tr>
+      <tr data-day="d7"><td>阿马尔菲→Bomerano<br><span class="sub">SITA 5070巴士</span></td><td>25min</td><td>€1.30</td><td>车上购票</td><td><span class="chip chip-green">现场</span></td></tr>
+      <tr data-day="d8"><td>索伦托→卡普里</td><td>30min</td><td>€20-25</td><td>caremar.it</td><td><span class="chip chip-green">现场</span></td></tr>
+      <tr data-day="d8"><td>卡普里→索伦托</td><td>30min</td><td>€20-25</td><td>caremar.it</td><td><span class="chip chip-green">现场</span></td></tr>
+      <tr data-day="d7"><td>波西塔诺→索伦托<br><span class="sub">诸神之路回程</span></td><td>30min</td><td>€18-20</td><td>码头现场</td><td><span class="chip chip-green">现场</span></td></tr>
     </table>
   </div></div></div>
 
@@ -484,6 +496,7 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
     <tr><td><strong>佛罗伦萨周一</strong></td><td>博物馆闭馆！已避开（Day4 周日去）</td></tr>
     <tr><td><strong>梵蒂冈周日</strong></td><td>博物馆闭馆！已安排周一去</td></tr>
     <tr><td><strong>防盗</strong></td><td>罗马/那不勒斯注意扒手，尤其地铁和旅游景点</td></tr>
+    <tr><td><strong>餐厅预定</strong></td><td>热门餐厅提前 1-3 天订，旺季提前一周。用 TheFork App 或 Google Maps 预定</td></tr>
   </table>
   </div></div></div>
 </div>
@@ -588,6 +601,28 @@ document.querySelectorAll('.ov-item[data-day]').forEach(row=>{
     document.getElementById('itinerary').classList.add('active');
     // Scroll to the day card
     const target = document.getElementById(row.dataset.day);
+    if(target){
+      const card = target.closest('.card') || target;
+      setTimeout(()=>{
+        const topOffset = document.querySelector('.topbar').offsetHeight + document.querySelector('.tabs').offsetHeight + 12;
+        const y = card.getBoundingClientRect().top + window.scrollY - topOffset;
+        window.scrollTo({top: y, behavior:'smooth'});
+      },50);
+    }
+  });
+});
+
+// Transport row click → jump to itinerary day
+document.querySelectorAll('#transport tr[data-day]').forEach(row=>{
+  row.addEventListener('click',()=>{
+    const dayId = row.dataset.day;
+    allTabs.forEach(b=>b.classList.remove('active'));
+    allPanels.forEach(p=>p.classList.remove('active'));
+    const itTab = allTabs.find(t=>t.dataset.t==='itinerary');
+    itTab.classList.add('active');
+    document.getElementById('itinerary').classList.add('active');
+    itTab.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+    const target = document.getElementById(dayId);
     if(target){
       const card = target.closest('.card') || target;
       setTimeout(()=>{
