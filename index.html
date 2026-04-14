@@ -21,7 +21,7 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
 /* Tabs */
 .tabs{background:#fff;display:flex;border-bottom:1px solid #e0e0e0;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;position:sticky;top:61px;z-index:100}
 .tabs::-webkit-scrollbar{display:none}
-.tab{padding:12px 20px;font-size:14px;font-weight:500;color:#5f6368;border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:all .15s;font-family:inherit}
+.tab{padding:12px 20px;font-size:14px;font-weight:500;color:#5f6368;border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:all .15s;font-family:inherit;-webkit-tap-highlight-color:transparent}
 .tab:hover{color:#202124;background:#f1f3f4}
 .tab.active{color:#1a73e8;border-bottom-color:#1a73e8}
 
@@ -333,9 +333,9 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
       <div class="card-title">佛罗伦萨</div>
     </div>
   </div><div class="card-body" style="max-height:none"><div class="card-content">
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>Airbnb 民宿</strong><br><span class="sub">Via dei Pandolfini, 27, Florence, Tuscany 50122</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>Palazzo Borghese</strong><br><span class="sub">Via dei Pandolfini, 27, Florence, Tuscany 50122</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>入住 15:00-20:00</strong><br><span class="sub">退房 11:00 前</span></div></div>
-    <div style="padding:4px 0 8px"><a class="view-link" href="https://www.airbnb.com/l/UrJ1ezoa" target="_blank" style="font-size:14px">查看 Airbnb 详情 →</a></div>
+    <div style="padding:4px 0 8px"><a class="view-link" href="https://www.airbnb.com/l/UrJ1ezoa" target="_blank" rel="noopener" style="font-size:14px">查看 Airbnb 详情 →</a></div>
   </div></div></div>
 
   <!-- 罗马 4/26-28 -->
@@ -519,6 +519,8 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
   <div class="check-item"><div class="check-box"></div><div class="check-text">舒适走路鞋（罗马/佛罗伦萨暴走）</div></div>
   <div class="check-item"><div class="check-box"></div><div class="check-text">雨具（折叠伞）</div></div>
   <div class="check-item"><div class="check-box"></div><div class="check-text">颈枕 + 眼罩（长途飞行）</div></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-text">泳衣</div></div>
+  <div class="check-item"><div class="check-box"></div><div class="check-text">下载电影（飞机上看）</div></div>
 
   <div class="sub-title">💊 药品</div>
   <div class="check-item"><div class="check-box"></div><div class="check-text">过敏药</div></div>
@@ -558,14 +560,16 @@ allTabs.forEach((t,i)=>{
   t.addEventListener('click',()=>switchToTab(i));
 });
 
-// Touch swipe to switch tabs
-let touchStartX=0, touchStartY=0, touchStartTime=0;
+// Touch swipe to switch tabs (content area only, not tab bar)
+let touchStartX=0, touchStartY=0, touchStartTime=0, touchInTabs=false;
 document.addEventListener('touchstart',e=>{
+  touchInTabs=!!e.target.closest('.tabs');
   touchStartX=e.touches[0].clientX;
   touchStartY=e.touches[0].clientY;
   touchStartTime=Date.now();
 },{passive:true});
 document.addEventListener('touchend',e=>{
+  if(touchInTabs) return;
   const dx=e.changedTouches[0].clientX-touchStartX;
   const dy=e.changedTouches[0].clientY-touchStartY;
   const dt=Date.now()-touchStartTime;
