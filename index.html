@@ -30,9 +30,10 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
 .tab.active{color:#1a73e8;border-bottom-color:#1a73e8}
 
 /* Content */
-.content{max-width:800px;margin:0 auto;padding:16px}
+.content{max-width:800px;margin:0 auto;padding:16px;overflow-x:hidden}
 .panel{display:none}
-.panel.active{display:block}
+.panel.active{display:block;animation:panelIn .25s ease-out}
+@keyframes panelIn{from{opacity:0;transform:translateX(var(--slide-dir,40px))}to{opacity:1;transform:translateX(0)}}
 
 /* Cards */
 .card{background:#fff;border-radius:12px;border:1px solid #e0e0e0;margin-bottom:12px;overflow:hidden}
@@ -349,7 +350,7 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
       <div class="card-title">罗马</div>
     </div>
   </div><div class="card-body" style="max-height:none"><div class="card-content">
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>Airbnb 民宿</strong><br><span class="sub">Via Urbana, 12, Rome, Lazio 00184</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>Urbana Love</strong><br><span class="sub">Via Urbana, 12, Rome, Lazio 00184</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>入住 15:00</strong><br><span class="sub">退房 10:00 前</span></div></div>
     <div style="padding:4px 0 8px"><a class="view-link" href="https://www.airbnb.com/l/B5f2N668" target="_blank" rel="noopener" style="font-size:14px;text-decoration:none">查看详情 →</a></div>
   </div></div></div>
@@ -362,7 +363,7 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
       <div class="card-title">索伦托</div>
     </div>
   </div><div class="card-body" style="max-height:none"><div class="card-content">
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>Airbnb 民宿</strong><br><span class="sub">Via degli Aranci, 67, Sorrento, Campania 80067</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>马里奥套房</strong><br><span class="sub">Via degli Aranci, 67, Sorrento, Campania 80067</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>入住 15:00</strong><br><span class="sub">退房 10:00 前</span></div></div>
     <div style="padding:4px 0 8px"><a class="view-link" href="https://www.airbnb.com/l/4doaxTHY" target="_blank" rel="noopener" style="font-size:14px;text-decoration:none">查看详情 →</a></div>
   </div></div></div>
@@ -375,7 +376,7 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
       <div class="card-title">佛罗伦萨</div>
     </div>
   </div><div class="card-body" style="max-height:none"><div class="card-content">
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>Airbnb 民宿</strong><br><span class="sub">Via Francesco Landini, 9, Florence, Tuscany 50144</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>Casa Francesca</strong><br><span class="sub">Via Francesco Landini, 9, Florence, Tuscany 50144</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>入住 16:00</strong><br><span class="sub">退房 10:00 前</span></div></div>
     <div style="padding:4px 0 8px"><a class="view-link" href="https://www.airbnb.com/l/XbePlUdU" target="_blank" rel="noopener" style="font-size:14px;text-decoration:none">查看详情 →</a></div>
   </div></div></div>
@@ -388,7 +389,7 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
       <div class="card-title">米兰</div>
     </div>
   </div><div class="card-body" style="max-height:none"><div class="card-content">
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>Airbnb 民宿</strong><br><span class="sub">Via Napo Torriani, 1, Milan, Lombardy 20124</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>[Stazione Centrale] 2BDR</strong><br><span class="sub">Via Napo Torriani, 1, Milan, Lombardy 20124</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>入住 15:00</strong><br><span class="sub">退房 10:00 前</span></div></div>
     <div style="padding:4px 0 8px"><a class="view-link" href="https://www.airbnb.com/l/2m0PBaxf" target="_blank" rel="noopener" style="font-size:14px;text-decoration:none">查看详情 →</a></div>
   </div></div></div>
@@ -559,14 +560,22 @@ if(topbar && tabs) tabs.style.top = topbar.offsetHeight + 'px';
 // Tab switching
 const allTabs = Array.from(document.querySelectorAll('.tab'));
 const allPanels = Array.from(document.querySelectorAll('.panel'));
-function switchToTab(idx){
+let lastTabIdx = 0;
+function switchToTab(idx, dir){
   if(idx<0||idx>=allTabs.length) return;
+  const cur = allTabs.findIndex(t=>t.classList.contains('active'));
+  if(dir===undefined) dir = idx > cur ? 1 : -1;
+  document.documentElement.style.setProperty('--slide-dir', dir>0 ? '40px' : '-40px');
   allTabs.forEach(b=>b.classList.remove('active'));
-  allPanels.forEach(p=>p.classList.remove('active'));
+  allPanels.forEach(p=>{p.classList.remove('active');p.style.animation='none'});
   allTabs[idx].classList.add('active');
-  document.getElementById(allTabs[idx].dataset.t).classList.add('active');
+  const panel = document.getElementById(allTabs[idx].dataset.t);
+  void panel.offsetWidth; // force reflow
+  panel.style.animation='';
+  panel.classList.add('active');
   allTabs[idx].scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
   window.scrollTo({top:0});
+  lastTabIdx = idx;
 }
 allTabs.forEach((t,i)=>{
   t.addEventListener('click',()=>switchToTab(i));
@@ -587,8 +596,8 @@ document.addEventListener('touchend',e=>{
   const dt=Date.now()-touchStartTime;
   if(Math.abs(dx)>60 && Math.abs(dx)>Math.abs(dy)*1.5 && dt<400){
     const cur=allTabs.findIndex(t=>t.classList.contains('active'));
-    if(dx<0) switchToTab(cur+1); // swipe left → next
-    else switchToTab(cur-1);     // swipe right → prev
+    if(dx<0) switchToTab(cur+1, 1);  // swipe left → next
+    else switchToTab(cur-1, -1);     // swipe right → prev
   }
 },{passive:true});
 // Overview row click → jump to itinerary day
