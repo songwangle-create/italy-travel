@@ -33,7 +33,6 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
 /* Cards */
 .card{background:#fff;border-radius:12px;border:1px solid #e0e0e0;margin-bottom:12px;overflow:hidden}
 .card-header{padding:12px 20px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;background:#f8f9fa;border-bottom:1px solid #eee;transition:background .1s}
-.card-header:hover{background:#f1f3f4}
 .card-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
 .dot-green{background:#34a853}
 .dot-cyan{background:#00acc1}
@@ -120,8 +119,8 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
 .footer{text-align:center;padding:32px 24px;font-size:12px;color:#9aa0a6}
 
 /* View link */
-.view-link{color:#1a73e8;font-size:13px;font-weight:400;cursor:pointer;margin-left:6px;white-space:nowrap}
-.view-link:hover{text-decoration:underline}
+.view-link{color:#1a73e8;font-size:13px;font-weight:400;cursor:pointer;margin-left:6px;white-space:nowrap;text-decoration:none}
+.view-link:hover{opacity:.8}
 
 @media(max-width:640px){
   .content{padding:16px}
@@ -181,7 +180,7 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
     <div class="ov-item" data-day="d10"><div class="ov-dot ov-dot-g"></div><div class="ov-num">10</div><div class="ov-date">5/2 六</div><div class="ov-city">佛罗伦萨 → 比萨 → 米兰</div><div class="ov-tag">住米兰</div></div>
     <div class="ov-item" data-day="d11"><div class="ov-dot ov-dot-g"></div><div class="ov-num">11</div><div class="ov-date">5/3 日</div><div class="ov-city">米兰</div><div class="ov-tag">住米兰</div></div>
     <div class="ov-item" data-day="d12"><div class="ov-dot ov-dot-b"></div><div class="ov-num">12</div><div class="ov-date">5/4 一</div><div class="ov-city">米兰 → 香港</div><div class="ov-tag">飞机上</div></div>
-    <div class="ov-item" data-day="d13"><div class="ov-dot ov-dot-b"></div><div class="ov-num">13</div><div class="ov-date">5/5 二</div><div class="ov-city">香港 → 深圳</div><div class="ov-tag">到家</div></div>
+    <div class="ov-item" data-day="d13"><div class="ov-dot ov-dot-b"></div><div class="ov-num">13</div><div class="ov-date">5/5 二</div><div class="ov-city">香港 → 广州</div><div class="ov-tag">到家</div></div>
   </div>
 </div>
 
@@ -190,20 +189,20 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
 
   <!-- D1 -->
   <div class="card open"><div class="card-header" onclick="this.parentElement.classList.toggle('open')"><div class="card-dot dot-blue"></div><div class="card-info"><div id="d1" class="card-day">DAY 1 · 4/23 周四</div><div class="card-title">深圳 → 香港 · 出发</div></div><div class="card-chevron">▾</div></div><div class="card-body"><div class="card-content">
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>下班后前往香港机场</strong></div></div>
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>CX233 香港→米兰</strong><br><span class="sub">00:50 起飞</span></div></div>
-    <div class="callout callout-info"><div class="callout-text">提前值机选座，长途飞行带颈枕和眼罩</div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>广州→香港高铁</strong><br><span class="sub">待定</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>香港西九龙→机场</strong><br><span class="sub">地铁</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>CX233 香港→米兰</strong><br><span class="sub">00:50 起飞，提前值机选座</span></div></div>
   </div></div></div>
 
   <!-- D2 -->
   <div class="card open"><div class="card-header" onclick="this.parentElement.classList.toggle('open')"><div class="card-dot dot-green"></div><div class="card-info"><div id="d2" class="card-day">DAY 2 · 4/24 周五</div><div class="card-title">米兰 → 佛罗伦萨</div></div><div class="card-chevron">▾</div></div><div class="card-body"><div class="card-content">
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>抵达米兰 MXP</strong><br><span class="sub">08:00</span></div></div>
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>米兰→佛罗伦萨高铁</strong><br><span class="sub">Malpensa Express → Milano Centrale 50min → Firenze S.M.N. 高铁 1h50m，预计 12:00 抵达</span></div></div>
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>入住佛罗伦萨</strong><br><span class="sub">建议 S.M.N. 火车站附近</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>机场→米兰中央站</strong><br><span class="sub">Malpensa Express 50min，€15，现场买票</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>米兰→佛罗伦萨高铁</strong> <span class="chip chip-blue">Klook 已购</span><br><span class="sub">Milano Centrale → Firenze S.M.N.，11:40-13:35，Italo，电子票</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>入住佛罗伦萨</strong><br><span class="sub">可选择休息</span></div></div>
     <div class="section-label">下午备选</div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>中央市场</strong> Mercato Centrale <span class="chip chip-green">免费</span><br><span class="sub">二楼美食广场，牛肚包/手工意面</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>米开朗基罗广场</strong> <span class="chip chip-green">免费</span><br><span class="sub">傍晚看日落全景</span></div></div>
-    <div class="callout callout-info"><div class="callout-text">Malpensa Express → trenord.it · 高铁 → trenitalia.com 或 italotreno.it</div></div>
   </div></div></div>
 
   <!-- D3 -->
@@ -214,13 +213,13 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
   </div></div></div>
 
   <!-- D4 -->
-  <div class="card open"><div class="card-header" onclick="this.parentElement.classList.toggle('open')"><div class="card-dot dot-green"></div><div class="card-info"><div id="d4" class="card-day">DAY 4 · 4/26 周日</div><div class="card-title">佛罗伦萨精华 → 罗马</div></div><div class="card-chevron">▾</div></div><div class="card-body"><div class="card-content">
+  <div class="card open"><div class="card-header" onclick="this.parentElement.classList.toggle('open')"><div class="card-dot dot-green"></div><div class="card-info"><div id="d4" class="card-day">DAY 4 · 4/26 周日</div><div class="card-title">佛罗伦萨 → 罗马</div></div><div class="card-chevron">▾</div></div><div class="card-body"><div class="card-content">
     <div class="section-label">上午 — 佛罗伦萨</div>
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>乌菲兹美术馆 8:45</strong> <span class="chip chip-blue">Klook 已购</span><br><span class="sub">波提切利《维纳斯的诞生》《春》，约2-3h · 备选：学院美术馆看真大卫 ~€20 <a class="view-link" href="uffizi.html">查看名作</a></span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>乌菲兹美术馆</strong> <span class="chip chip-blue">Klook 已购</span><br><span class="sub">8:45 入场，波提切利《维纳斯的诞生》《春》，约2-3h <a class="view-link" href="uffizi.html">查看名作</a></span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>领主广场 & 旧宫</strong> <span class="chip chip-green">免费</span><br><span class="sub">广场上有大卫复制品</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>老桥</strong> <span class="chip chip-green">免费</span><br><span class="sub">Ponte Vecchio</span></div></div>
     <div class="section-label">中午 → 罗马</div>
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>佛罗伦萨→罗马</strong><br><span class="sub">高铁 1h30m</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>佛罗伦萨→罗马</strong> <span class="chip chip-blue">Klook 已购</span><br><span class="sub">Firenze S.M.N. → Roma Termini，13:28-15:10，Italo，电子票</span></div></div>
     <div class="section-label">下午 — 罗马</div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>入住罗马</strong></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>西班牙广场</strong> <span class="chip chip-green">免费</span></div></div>
@@ -247,8 +246,8 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>真理之口</strong> <span class="chip chip-green">免费</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>睡到自然醒 / 附近逛逛</strong><br><span class="sub">备选：纳沃纳广场 / 博尔盖塞美术馆</span></div></div>
     <div class="section-label">下午 → 索伦托</div>
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>Roma → Napoli</strong><br><span class="sub">高铁 1h10m</span></div></div>
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>Napoli → Sorrento</strong><br><span class="sub">Circumvesuviana 约1h，注意看管随身物品</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>罗马→那不勒斯</strong> <span class="chip chip-blue">Klook 已购</span><br><span class="sub">Roma Termini → Napoli Centrale，13:40-14:53，Italo，电子票</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>那不勒斯→索伦托</strong><br><span class="sub">Circumvesuviana 约1h，注意看管随身物品</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>入住索伦托</strong></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>晚上逛小镇，喝柠檬酒</strong></div></div>
   </div></div></div>
@@ -315,9 +314,9 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
   </div></div></div>
 
   <!-- D13 -->
-  <div class="card open"><div class="card-header" onclick="this.parentElement.classList.toggle('open')"><div class="card-dot dot-blue"></div><div class="card-info"><div id="d13" class="card-day">DAY 13 · 5/5 周二</div><div class="card-title">香港 → 深圳</div></div><div class="card-chevron">▾</div></div><div class="card-body"><div class="card-content">
+  <div class="card open"><div class="card-header" onclick="this.parentElement.classList.toggle('open')"><div class="card-dot dot-blue"></div><div class="card-info"><div id="d13" class="card-day">DAY 13 · 5/5 周二</div><div class="card-title">香港 → 广州</div></div><div class="card-chevron">▾</div></div><div class="card-body"><div class="card-content">
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>抵达香港</strong><br><span class="sub">06:25</span></div></div>
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>香港→深圳</strong><br><span class="sub">高铁约15min</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>香港→广州</strong><br><span class="sub">高铁约50min</span></div></div>
   </div></div></div>
 
 </div>
@@ -335,7 +334,7 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
   </div><div class="card-body" style="max-height:none"><div class="card-content">
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>Palazzo Borghese</strong><br><span class="sub">Via dei Pandolfini, 27, Florence, Tuscany 50122</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>入住 15:00-20:00</strong><br><span class="sub">退房 11:00 前</span></div></div>
-    <div style="padding:4px 0 8px"><a class="view-link" href="https://www.airbnb.com/l/UrJ1ezoa" target="_blank" rel="noopener" style="font-size:14px">查看 Airbnb 详情 →</a></div>
+    <div style="padding:4px 0 8px"><a class="view-link" href="https://www.airbnb.com/l/UrJ1ezoa" target="_blank" rel="noopener" style="font-size:14px;text-decoration:none">查看详情 →</a></div>
   </div></div></div>
 
   <!-- 罗马 4/26-28 -->
@@ -394,9 +393,9 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
       <colgroup><col style="width:40%"><col style="width:12%"><col style="width:16%"><col style="width:20%"><col style="width:12%"></colgroup>
       <tr><th>路线</th><th>时长</th><th>参考价</th><th>平台</th><th>状态</th></tr>
       <tr><td>米兰机场→市区<br><span class="sub">Malpensa Express</span></td><td>50min</td><td>€15</td><td>trenord.it</td><td><span class="chip chip-green">现场</span></td></tr>
-      <tr><td>米兰→佛罗伦萨<br><span class="sub">Frecciarossa / Italo</span></td><td>1h50m</td><td>€29-65</td><td>trenitalia / italo</td><td><span class="chip chip-yellow">待购</span></td></tr>
-      <tr><td>佛罗伦萨→罗马<br><span class="sub">Frecciarossa / Italo</span></td><td>1h30m</td><td>€19-50</td><td>trenitalia / italo</td><td><span class="chip chip-yellow">待购</span></td></tr>
-      <tr><td>罗马→那不勒斯<br><span class="sub">Frecciarossa / Italo</span></td><td>1h10m</td><td>€15-45</td><td>trenitalia / italo</td><td><span class="chip chip-yellow">待购</span></td></tr>
+      <tr><td>米兰→佛罗伦萨<br><span class="sub">Italo</span></td><td>1h55m</td><td>¥515/人</td><td>Klook</td><td><span class="chip chip-blue">已购</span></td></tr>
+      <tr><td>佛罗伦萨→罗马<br><span class="sub">Italo</span></td><td>1h42m</td><td>¥257/人</td><td>Klook</td><td><span class="chip chip-blue">已购</span></td></tr>
+      <tr><td>罗马→那不勒斯<br><span class="sub">Italo</span></td><td>1h13m</td><td>¥197/人</td><td>Klook</td><td><span class="chip chip-blue">已购</span></td></tr>
       <tr><td>那不勒斯→索伦托<br><span class="sub">Circumvesuviana</span></td><td>1h</td><td>€4.40</td><td>现场购票</td><td><span class="chip chip-green">现场</span></td></tr>
       <tr><td>那不勒斯→佛罗伦萨<br><span class="sub">Frecciarossa / Italo</span></td><td>3h</td><td>€25-60</td><td>trenitalia / italo</td><td><span class="chip chip-yellow">待购</span></td></tr>
       <tr><td>佛罗伦萨→比萨<br><span class="sub">Regionale 慢车</span></td><td>1h</td><td>€8.70</td><td>trenitalia / 现场</td><td><span class="chip chip-green">现场</span></td></tr>
@@ -439,7 +438,6 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
   <div class="card" style="margin-bottom:16px"><div class="card-body" style="max-height:none"><div class="card-content" style="padding:8px 20px">
   <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>托斯卡纳一日游 Tuscany Day Trip</strong> — 跟团，需提前预订 <span class="chip chip-yellow">飞猪/Viator</span></div></div>
   <div class="check-item"><div class="check-box done">✓</div><div class="check-text"><strong>乌菲兹美术馆 Galleria degli Uffizi</strong> ¥302/人 <span class="chip chip-blue">Klook 已购 4/26 8:45</span></div></div>
-  <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>佛罗伦萨学院美术馆 Galleria dell'Accademia</strong> ~€20 <span class="chip chip-yellow">备选</span></div></div>
   <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>万神殿 Pantheon</strong> €5 <span class="chip chip-yellow">Klook提前2天</span></div></div>
   <div class="check-item"><div class="check-box done">✓</div><div class="check-text"><strong>罗马斗兽场 Colosseo</strong>（含古罗马广场 + 帕拉蒂尼山联票）¥207/人 <span class="chip chip-blue">Klook 已购 4/27 15:45</span></div></div>
   <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>梵蒂冈博物馆 Vatican Museums</strong>（含西斯廷教堂 Sistine Chapel）~€17 <span class="chip chip-green">现场刷票</span></div></div>
@@ -449,6 +447,7 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
   </div></div></div>
 
   <div class="card" style="margin-bottom:16px"><div class="card-header" style="cursor:default"><div class="card-info"><div class="card-title" style="color:#9aa0a6">约不到</div></div></div><div class="card-body" style="max-height:none"><div class="card-content" style="padding:8px 20px">
+  <div style="padding:6px 0;font-size:14px;color:#9aa0a6;border-bottom:1px solid #f1f3f4">学院美术馆 Galleria dell'Accademia（真大卫）</div>
   <div style="padding:6px 0;font-size:14px;color:#9aa0a6;border-bottom:1px solid #f1f3f4">博尔盖塞美术馆 Galleria Borghese</div>
   <div style="padding:6px 0;font-size:14px;color:#9aa0a6">圣母感恩教堂 Santa Maria delle Grazie（最后的晚餐）</div>
   </div></div></div>
