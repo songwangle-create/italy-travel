@@ -84,7 +84,7 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
 /* Table */
 .g-table{width:100%;border-collapse:collapse;font-size:14px;margin:0}
 .g-table th{text-align:left;padding:10px 12px;font-weight:500;color:#5f6368;font-size:12px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid #e0e0e0;background:none;vertical-align:middle;white-space:nowrap;line-height:1.5}
-.g-table td{text-align:left;padding:10px 12px;border-bottom:1px solid #e0e0e0;color:#111;vertical-align:middle;line-height:1.5}
+.g-table td{text-align:left;padding:10px 12px;border-bottom:1px solid #e0e0e0;color:#111;vertical-align:top;line-height:1.5}
 .g-table tr:last-child td{border-bottom:none}
 .g-table tr:hover td{background:#f8f9fa}
 .g-table tr[data-day]{cursor:pointer;-webkit-tap-highlight-color:transparent}
@@ -200,7 +200,7 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
 
   <!-- D1 -->
   <div class="card open"><div class="card-header" onclick="this.parentElement.classList.toggle('open')"><div class="card-dot dot-blue"></div><div class="card-info"><div id="d1" class="card-day">DAY 1 · 4/23 周四</div><div class="card-title">深圳 → 香港 · 出发</div></div><div class="card-chevron">▾</div></div><div class="card-body"><div class="card-content">
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>广州→香港高铁</strong> <span class="chip chip-blue">已购</span><br><span class="sub">G6079 广州南→香港西九龙，20:53-21:51，58min</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>广州→香港</strong> <span class="chip chip-blue">已购</span><br><span class="sub">G6079 广州南→香港西九龙，20:53-21:51</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>香港西九龙→机场</strong><br><span class="sub">地铁</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>CX233 香港→米兰</strong><br><span class="sub">00:50 起飞，提前值机选座</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>离境退税</strong><br><span class="sub">每人 ¥200 港币，过安检进禁区后提交 <span style="color:#1a73e8;cursor:pointer" onclick="document.getElementById('taxOverlay').classList.add('show');document.body.style.overflow='hidden'">如何退税？</span></span></div></div>
@@ -219,22 +219,23 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
 
   <!-- D3 -->
   <div class="card open"><div class="card-header" onclick="this.parentElement.classList.toggle('open')"><div class="card-dot dot-green"></div><div class="card-info"><div id="d3" class="card-day">DAY 3 · 4/25 周六</div><div class="card-title">托斯卡纳一日游</div></div><div class="card-chevron">▾</div></div><div class="card-body"><div class="card-content">
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>托斯卡纳跟团一日游</strong><br><span class="sub">锡耶纳 → 圣吉米尼亚诺 → 蒙特里焦尼 → 酒庄品酒</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>托斯卡纳一日游</strong> <span class="chip chip-blue">已定</span><br><span class="sub">锡耶纳 → 小S弯 → 皮恩扎 → 小耳朵教堂 → 双排树<br>接车：Via Santa Caterina da Siena, 3（上车付尾款）</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>住佛罗伦萨</strong></div></div>
-    <div class="callout callout-info"><div class="callout-text"><strong>预订</strong> 飞猪 / GetYourGuide / Viator 搜 "Tuscany Day Trip from Florence"</div></div>
   </div></div></div>
 
   <!-- D4 -->
   <div class="card open"><div class="card-header" onclick="this.parentElement.classList.toggle('open')"><div class="card-dot dot-green"></div><div class="card-info"><div id="d4" class="card-day">DAY 4 · 4/26 周日</div><div class="card-title">佛罗伦萨 → 罗马</div></div><div class="card-chevron">▾</div></div><div class="card-body"><div class="card-content">
     <div class="section-label">上午 — 佛罗伦萨</div>
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>乌菲兹美术馆</strong> <span class="chip chip-blue">Klook 已购</span><br><span class="sub">8:45 入场，波提切利《维纳斯的诞生》《春》，约2-3h <a class="view-link" href="uffizi.html" onclick="sessionStorage.setItem('returnTo','d4');sessionStorage.setItem('returnTab','itinerary')">查看名作</a></span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>乌菲兹美术馆</strong> <span class="chip chip-blue">Klook 已购</span><br><span class="sub">8:45 入场，约2-3h <a class="view-link" href="uffizi.html" onclick="sessionStorage.setItem('returnTo','d4');sessionStorage.setItem('returnTab','itinerary')">查看名作</a></span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>领主广场 & 旧宫</strong> <span class="chip chip-green">免费</span><br><span class="sub">广场上有大卫复制品</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>老桥</strong> <span class="chip chip-green">免费</span><br><span class="sub">Ponte Vecchio</span></div></div>
     <div class="section-label">中午 → 罗马</div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>佛罗伦萨→罗马</strong> <span class="chip chip-blue">Klook 已购</span><br><span class="sub">Firenze S.M.N. → Roma Termini，13:28-15:10，Italo，电子票</span></div></div>
     <div class="section-label">下午 — 罗马</div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>入住罗马</strong></div></div>
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>西班牙广场</strong> <span class="chip chip-green">免费</span><br><span class="sub">Termini 附近，傍晚散步</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>博尔盖塞公园</strong> <span class="chip chip-green">免费</span><br><span class="sub">湖上划船 €3/人 20min，罗马最大城市公园，适合散步放松</span></div></div>
+    <div class="section-label">晚上</div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>西班牙广场</strong> <span class="chip chip-green">免费</span><br><span class="sub">夜景很美，广场旁边逛逛</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>晚餐在 Trastevere 区</strong></div></div>
   </div></div></div>
 
@@ -247,7 +248,7 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
     <div class="section-label">下午 15:45 — 斗兽场</div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>斗兽场 + 古罗马广场 + 帕拉蒂尼山</strong> <span class="chip chip-blue">Klook 已购</span><br><span class="sub">15:45 入场，联票3景点，约2-3h</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>真理之口</strong> <span class="chip chip-green">免费</span><br><span class="sub">斗兽场旁步行10min，希腊圣母堂门口</span></div></div>
-    <div class="callout callout-info"><div class="callout-text">梵蒂冈博物馆周日闭馆，安排周一。穿舒适鞋子，整天走路很多</div></div>
+    <div class="callout callout-info"><div class="callout-text">梵蒂冈博物馆周日闭馆，安排周一</div></div>
   </div></div></div>
 
   <!-- D6 -->
@@ -266,7 +267,7 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
   <!-- D7 -->
   <div class="card open"><div class="card-header" onclick="this.parentElement.classList.toggle('open')"><div class="card-dot dot-green"></div><div class="card-info"><div id="d7" class="card-day">DAY 7 · 4/29 周三</div><div class="card-title">诸神之路徒步</div></div><div class="card-chevron">▾</div></div><div class="card-body"><div class="card-content">
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>索伦托 → Bomerano</strong><br><span class="sub">渡轮到阿马尔菲约40min，换5070巴士上山约25min</span></div></div>
-    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>诸神之路</strong><br><span class="sub">Bomerano → Nocelle，3-4h，沿途阿马尔菲海岸绝美海景</span><span class="view-link" onclick="sessionStorage.setItem('returnTo','d7');sessionStorage.setItem('returnTab','itinerary');window.location.href='path-of-gods.html'">查看路线</span></div></div>
+    <div class="item"><div class="item-icon"></div><div class="item-text"><strong>诸神之路</strong><br><span class="sub">Bomerano → Nocelle，3-4h</span><span class="view-link" onclick="sessionStorage.setItem('returnTo','d7');sessionStorage.setItem('returnTab','itinerary');window.location.href='path-of-gods.html'">查看路线</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>下山到波西塔诺</strong></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>波西塔诺海滩休息、拍照</strong></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>波西塔诺→索伦托</strong><br><span class="sub">渡轮 30min</span></div></div>
@@ -291,7 +292,6 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>索伦托→那不勒斯</strong><br><span class="sub">Circumvesuviana 约1h</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>那不勒斯→佛罗伦萨</strong> <span class="chip chip-blue">Klook 已购</span><br><span class="sub">Napoli Centrale → Firenze S.M.N.，15:40-18:46，Trenitalia，电子票</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>入住佛罗伦萨</strong></div></div>
-    <div class="callout callout-info"><div class="callout-text">5月1日意大利劳动节，火车正常运营。提前买好高铁票</div></div>
   </div></div></div>
 
   <!-- D10 -->
@@ -305,7 +305,6 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
     <div class="section-label">晚上 → 米兰</div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>佛罗伦萨→米兰</strong> <span class="chip chip-blue">携程已购</span><br><span class="sub">Firenze S.M.N. → Milano Centrale，17:25-19:20，Italo，电子票</span></div></div>
     <div class="item"><div class="item-icon"></div><div class="item-text"><strong>入住米兰</strong><br><span class="sub">Milano Centrale 附近</span></div></div>
-    <div class="callout callout-info"><div class="callout-text">这天坐三趟火车，建议都提前买好票</div></div>
   </div></div></div>
 
   <!-- D11 -->
@@ -466,7 +465,7 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
 <!-- ========== TICKETS ========== -->
 <div class="panel" id="tickets">
   <div class="card" style="margin-bottom:16px"><div class="card-body" style="max-height:none"><div class="card-content" style="padding:8px 20px">
-  <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>托斯卡纳一日游 Tuscany Day Trip</strong> — 跟团，需提前预订 <span class="chip chip-yellow">飞猪/Viator</span></div></div>
+  <div class="check-item"><div class="check-box done">✓</div><div class="check-text"><strong>托斯卡纳一日游 Tuscany Day Trip</strong> — ¥2,160（3人总价）<span class="chip chip-blue">已定</span></div></div>
   <div class="check-item"><div class="check-box done">✓</div><div class="check-text"><strong>乌菲兹美术馆 Galleria degli Uffizi</strong> ¥302/人 <span class="chip chip-blue">Klook 已购 4/26 8:45</span></div></div>
   <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>万神殿 Pantheon</strong> €5 <span class="chip chip-yellow">Klook提前2天</span></div></div>
   <div class="check-item"><div class="check-box done">✓</div><div class="check-text"><strong>罗马斗兽场 Colosseo</strong>（含古罗马广场 + 帕拉蒂尼山联票）¥207/人 <span class="chip chip-blue">Klook 已购 4/27 15:45</span></div></div>
@@ -491,23 +490,23 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
     <tr><td>国际机票（往返）</td><td>¥12,368</td><td><span class="chip chip-blue">已购</span></td></tr>
     <tr><td>广州↔香港（高铁+大巴）</td><td>¥364</td><td><span class="chip chip-blue">已购</span></td></tr>
     <tr><td>意大利火车（5程）</td><td>¥1,648</td><td><span class="chip chip-blue">已购</span></td></tr>
-    <tr><td>门票（已购3项）</td><td>¥1,011</td><td><span class="chip chip-blue">已购</span></td></tr>
+    <tr><td>门票（已购4项）</td><td>¥1,731</td><td><span class="chip chip-blue">已购</span></td></tr>
     <tr><td>电话卡</td><td>¥80</td><td><span class="chip chip-blue">已购</span></td></tr>
     <tr><td>签证费</td><td>¥831</td><td><span class="chip chip-blue">已办</span></td></tr>
     <tr><td>旅行保险</td><td>¥138</td><td><span class="chip chip-blue">已购</span></td></tr>
     <tr><td>门票（待购）</td><td>≈ ¥300-400</td><td><span class="chip chip-yellow">预估</span></td></tr>
-    <tr><td>住宿（10晚）</td><td>待汇总</td><td><span class="chip chip-blue">已订</span></td></tr>
+    <tr><td>住宿（10晚）</td><td>¥6,667</td><td><span class="chip chip-blue">已订</span></td></tr>
     <tr><td>餐饮</td><td>≈ ¥2,800-4,500</td><td><span class="chip chip-yellow">预估</span></td></tr>
     <tr><td>南意交通/渡轮</td><td>≈ ¥580-700</td><td><span class="chip chip-yellow">预估</span></td></tr>
     <tr><td>机场快线（Malpensa×2）</td><td>≈ ¥240</td><td><span class="chip chip-yellow">预估</span></td></tr>
   </table>
   </div></div></div>
   <div class="budget-box">
-    <div class="budget-amount">已确认 ¥16,440 / 人</div>
-    <div class="budget-sub">机票+火车+国内交通+已购门票+电话卡+签证+保险</div>
+    <div class="budget-amount">已确认 ¥23,827 / 人</div>
+    <div class="budget-sub">机票+火车+国内交通+门票+住宿+电话卡+签证+保险+托斯卡纳</div>
     <div style="border-top:1px solid rgba(255,255,255,.3);margin:10px 0"></div>
-    <div class="budget-amount" style="font-size:18px;color:#fff;opacity:.85">预估总计 ≈ ¥21,000-23,000 / 人</div>
-    <div class="budget-sub">含待购门票+住宿+餐饮+南意交通+机场快线（住宿待汇总）</div>
+    <div class="budget-amount" style="font-size:18px;color:#fff;opacity:.85">预估总计 ≈ ¥27,500-29,000 / 人</div>
+    <div class="budget-sub">含待购门票+餐饮+南意交通+机场快线</div>
   </div>
 </div>
 
@@ -523,6 +522,7 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
     <tr><td><strong>梵蒂冈</strong></td><td>周日博物馆闭馆！已安排周一去</td></tr>
     <tr><td><strong>防盗</strong></td><td>罗马/那不勒斯注意扒手，尤其地铁和旅游景点</td></tr>
     <tr><td><strong>餐厅预定</strong></td><td>热门餐厅提前 1-3 天订，旺季提前一周。用 TheFork App 或 Google Maps 预定</td></tr>
+    <tr><td><strong>紧急电话</strong></td><td>报警 112 · 急救 118 · 火警 115<br>外交部领保热线 +86-10-12308（24h）<br>驻意大利使馆 +39-3939110852<br>驻米兰总领馆 +39-3242616666<br>驻佛罗伦萨总领馆 +39-3357748753</td></tr>
   </table>
   </div></div></div>
 </div>
