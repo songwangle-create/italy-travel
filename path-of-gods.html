@@ -43,9 +43,10 @@ body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202
 .card-content{padding:16px 20px}
 
 /* Steps */
-.step{display:flex;gap:14px;padding:12px 0;position:relative}
+.step{display:flex;gap:14px;padding:12px 0;position:relative;align-items:flex-start}
 .step+.step .step-body{border-top:1px solid #f1f3f4;padding-top:12px}
-.step-marker{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:28px}
+.step+.step .step-marker{padding-top:13px}
+.step-marker{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:28px;padding-top:1px}
 .step-num{width:28px;height:28px;border-radius:50%;background:#1a73e8;color:#fff;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center}
 .step-num.green{background:#34a853}
 .step-num.orange{background:#f9ab00}
