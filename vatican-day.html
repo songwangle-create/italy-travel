@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>梵蒂冈一日 · DAY 5</title>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Google Sans','Roboto',sans-serif;background:#f8f9fa;color:#202124;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* Top bar */
+.topbar{background:#fff;padding:16px 24px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #e0e0e0;position:sticky;top:0;z-index:1001}
+.topbar-back{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s;flex-shrink:0}
+.topbar-back:hover{background:#f1f3f4}
+.topbar-back svg{width:20px;height:20px;fill:#5f6368}
+.topbar-title{font-size:18px;font-weight:500;color:#202124;flex:1}
+.topbar-meta{font-size:13px;color:#5f6368}
+
+/* Content */
+.content{max-width:800px;margin:0 auto;padding:16px}
+
+/* Cards */
+.card{background:#fff;border-radius:12px;border:1px solid #e0e0e0;margin-bottom:12px;overflow:hidden}
+.card-header{padding:14px 20px;display:flex;align-items:center;gap:10px;user-select:none;background:#f8f9fa;border-bottom:1px solid #eee}
+.card-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.card-icon svg{width:18px;height:18px}
+.card-info{flex:1}
+.card-label{font-size:15px;font-weight:600;color:#202124}
+.card-sub{font-size:13px;color:#5f6368;margin-top:1px}
+.card-content{padding:16px 20px}
+
+/* Steps (timeline) */
+.step{display:flex;gap:14px;padding:12px 0;position:relative;align-items:flex-start}
+.step+.step .step-body{border-top:1px solid #f1f3f4;padding-top:12px}
+.step+.step .step-marker{padding-top:13px}
+.step-marker{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:56px;padding-top:1px}
+.step-time{font-size:12px;font-weight:600;color:#1a73e8;background:#e8f0fe;border-radius:100px;padding:3px 10px;white-space:nowrap}
+.step-time.green{color:#137333;background:#e6f4ea}
+.step-time.orange{color:#b06000;background:#fef7e0}
+.step-line{flex:1;width:2px;background:#e0e0e0;margin-top:8px;min-height:12px}
+.step-body{flex:1;min-width:0}
+.step-title{font-size:14px;font-weight:600;color:#202124}
+.step-desc{font-size:13px;color:#5f6368;margin-top:2px;line-height:1.55}
+.step-desc strong{font-weight:500;color:#202124}
+
+/* Highlight box */
+.hl-box{background:#e8f0fe;border-radius:8px;padding:12px 16px;margin:8px 0;font-size:13px;color:#174ea6;line-height:1.6}
+.hl-box.warn{background:#fef7e0;color:#b06000}
+.hl-box.success{background:#e6f4ea;color:#137333}
+
+/* Info grid */
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:8px 0}
+.info-item{background:#f8f9fa;border-radius:8px;padding:10px 14px}
+.info-label{font-size:11px;font-weight:500;color:#5f6368;text-transform:uppercase;letter-spacing:.5px}
+.info-val{font-size:15px;font-weight:600;color:#202124;margin-top:2px}
+.info-val .unit{font-size:12px;font-weight:400;color:#5f6368}
+
+/* Chip */
+.chip{display:inline-block;padding:2px 8px;border-radius:100px;font-size:12px;font-weight:500;white-space:nowrap}
+.chip-blue{background:#e8f0fe;color:#1a73e8}
+.chip-green{background:#e6f4ea;color:#137333}
+.chip-yellow{background:#fef7e0;color:#b06000}
+
+/* Callout */
+.callout{padding:12px 0 0;margin:8px 0 0;border-top:1px solid #e0e0e0;font-size:13px;color:#9aa0a6;line-height:1.6}
+.callout strong{font-weight:500;color:#9aa0a6}
+
+/* Footer */
+.footer{text-align:center;padding:32px 24px;font-size:12px;color:#9aa0a6}
+.footer a{color:#1a73e8;text-decoration:none}
+
+@media(max-width:640px){
+  .content{padding:12px}
+  .topbar{padding:12px 16px}
+  .topbar-meta{display:none}
+  .step-marker{width:52px}
+  .step-time{font-size:11px;padding:3px 8px}
+  .info-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="topbar">
+  <div class="topbar-back" onclick="history.back()" title="返回行程">
+    <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+  </div>
+  <div class="topbar-title">梵蒂冈一日</div>
+  <div class="topbar-meta">DAY 5 · 4/27 周一</div>
+</div>
+
+<div class="content">
+
+<!-- ===== 概览 ===== -->
+<div style="margin-bottom:16px">
+  <div style="font-size:20px;font-weight:700;color:#202124;margin-bottom:4px">圣彼得大教堂 + 梵蒂冈博物馆 + 西斯廷教堂</div>
+  <div style="font-size:13px;color:#9aa0a6;line-height:1.6">早7点进大教堂 · 9:30 跟团进博物馆 · 下午 15:45 斗兽场</div>
+</div>
+
+<div class="hl-box warn">
+  <strong>⚠️ 9:00 前到集合点（Via del Mascherino 88），迟到可能误团。</strong>进教堂需过肩过膝（薄围巾可临时遮肩）。
+</div>
+
+<!-- ===== 出发去圣彼得 ===== -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-icon" style="background:#e8f0fe">
+      <svg viewBox="0 0 24 24" fill="#1a73e8"><path d="M12 2C8 2 4 2.5 4 6v9.5C4 17.43 5.57 19 7.5 19L6 20.5v.5h12v-.5L16.5 19c1.93 0 3.5-1.57 3.5-3.5V6c0-3.5-4-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm3.5-7H6V6h5v4zm2 0V6h5v4h-5zm3.5 7c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+    </div>
+    <div class="card-info">
+      <div class="card-label">出发：酒店 → 圣彼得广场</div>
+      <div class="card-sub">地铁 B 线转 A 线 | 约 40min</div>
+    </div>
+  </div>
+  <div class="card-content">
+
+    <div class="step">
+      <div class="step-marker"><div class="step-time">06:20</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">酒店 Urbana Love 出发</div>
+        <div class="step-desc">
+          Via Urbana 12（Monti 区）→ 步行 5min 到地铁 <strong>Cavour 站</strong>（B 线）
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-marker"><div class="step-time">06:30</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">Cavour → Termini → Ottaviano</div>
+        <div class="step-desc">
+          B 线 1 站到 Termini 换 A 线，再 4 站到 Ottaviano，共约 20min<br>
+          <span style="color:#9aa0a6">建议买 Roma 24h 票 €7，当天地铁随便坐</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-marker"><div class="step-time">06:55</div></div>
+      <div class="step-body">
+        <div class="step-title">Ottaviano 站 → 圣彼得广场</div>
+        <div class="step-desc">
+          出站沿 Via Ottaviano 向南步行 8min
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== 圣彼得大教堂 ===== -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-icon" style="background:#e6f4ea">
+      <svg viewBox="0 0 24 24" fill="#34a853"><path d="M12 2L4 7v11a1 1 0 001 1h4v-7h6v7h4a1 1 0 001-1V7l-8-5zm-1 5h2v2h2v2h-2v2h-2V11H9V9h2V7z"/></svg>
+    </div>
+    <div class="card-info">
+      <div class="card-label">圣彼得大教堂 <span class="chip chip-green">免费</span></div>
+      <div class="card-sub">07:00 开门 · 约 80min</div>
+    </div>
+  </div>
+  <div class="card-content">
+
+    <div class="step">
+      <div class="step-marker"><div class="step-time green">07:00</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">过安检进大教堂</div>
+        <div class="step-desc">
+          早高峰前几乎不排队，高峰期（9点后）要排 30-45min
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-marker"><div class="step-time green">07:10</div></div>
+      <div class="step-body">
+        <div class="step-title">主要看点</div>
+        <div class="step-desc">
+          · 米开朗基罗《<strong>圣殇 Pietà</strong>》（入口右手第一个礼拜堂）<br>
+          · 贝尼尼<strong>青铜华盖</strong>（主祭坛上方）<br>
+          · 米开朗基罗<strong>圆顶</strong>（仰头看内部穹顶）<br>
+          · 圣彼得青铜像（摸脚祈福）
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>穹顶登顶不建议做</strong>：551 级台阶，耗时 1-1.5h，时间不够。拍全景照在广场就行。
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== 走到集合点 ===== -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-icon" style="background:#fef7e0">
+      <svg viewBox="0 0 24 24" fill="#f9ab00"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+    </div>
+    <div class="card-info">
+      <div class="card-label">走到梵蒂冈博物馆集合点</div>
+      <div class="card-sub">约 5min · 必须 9:00 前到</div>
+    </div>
+  </div>
+  <div class="card-content">
+
+    <div class="step">
+      <div class="step-marker"><div class="step-time orange">08:30</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">广场拍照 + 出发</div>
+        <div class="step-desc">
+          从圣彼得广场北侧 Via di Porta Angelica 出，向北走
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-marker"><div class="step-time orange">08:55</div></div>
+      <div class="step-body">
+        <div class="step-title">到达集合点</div>
+        <div class="step-desc">
+          <strong>Via del Mascherino 88, 00193 Roma</strong><br>
+          <span style="color:#9aa0a6">在梵蒂冈城墙东侧，和博物馆入口（Viale Vaticano）不是一个地方，别走错</span><br>
+          <a href="https://www.google.com/maps/place/Via+del+Mascherino,+88,+00193+Roma+RM" target="_blank" style="color:#1a73e8;text-decoration:none;font-size:13px">Google Maps 打开 →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== 梵蒂冈博物馆 ===== -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-icon" style="background:#e8f0fe">
+      <svg viewBox="0 0 24 24" fill="#1a73e8"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+    </div>
+    <div class="card-info">
+      <div class="card-label">梵蒂冈博物馆 + 西斯廷教堂 <span class="chip chip-blue">Agoda 已购</span></div>
+      <div class="card-sub">09:30 入场 · 含中文导览 · 约 3h</div>
+    </div>
+  </div>
+  <div class="card-content">
+
+    <div class="step">
+      <div class="step-marker"><div class="step-time">09:30</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">入场 · 跟团中文导览</div>
+        <div class="step-desc">
+          主要看点：松果庭院 → 埃及馆 → 八角庭院（<strong>拉奥孔</strong>）→ 挂毯廊 → 地图廊 → <strong>拉斐尔房间</strong>（《雅典学院》）→ <strong>西斯廷教堂</strong>（米开朗基罗《创世纪》《最后的审判》）
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-marker"><div class="step-time">12:30</div></div>
+      <div class="step-body">
+        <div class="step-title">从博物馆出来</div>
+        <div class="step-desc">
+          出口在博物馆北侧 Viale Vaticano
+        </div>
+      </div>
+    </div>
+
+    <div class="hl-box">
+      <strong>西斯廷教堂注意：</strong>内部禁止拍照、禁止说话，戴帽子要摘下。想多拍照只能在其他展厅拍。
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== 午饭 ===== -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-icon" style="background:#fce8e6">
+      <svg viewBox="0 0 24 24" fill="#ea4335"><path d="M8.1 13.34l2.83-2.83L3.91 3.5a4 4 0 000 5.66l4.19 4.18zm6.78-1.81c1.53.71 3.68.21 5.27-1.38 1.91-1.91 2.28-4.65.81-6.12-1.46-1.46-4.2-1.1-6.12.81-1.59 1.59-2.09 3.74-1.38 5.27L3.7 19.87l1.41 1.41L12 14.41l6.88 6.88 1.41-1.41L13.41 13l1.47-1.47z"/></svg>
+    </div>
+    <div class="card-info">
+      <div class="card-label">午饭 · Borgo Pio 街</div>
+      <div class="card-sub">梵蒂冈旁老街区</div>
+    </div>
+  </div>
+  <div class="card-content">
+
+    <div class="step">
+      <div class="step-marker"><div class="step-time">13:00</div></div>
+      <div class="step-body">
+        <div class="step-title">Borgo Pio 或 Prati 区</div>
+        <div class="step-desc">
+          梵蒂冈旁的老街区，避开圣彼得广场旁的游客餐厅<br>
+          推荐：披萨、pasta、carbonara，人均 €15-20<br>
+          <span style="color:#9aa0a6">参考：Pizzarium Bonci、Ristorante dei Musei、Il Sorpasso</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== 去斗兽场 ===== -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-icon" style="background:#fef7e0">
+      <svg viewBox="0 0 24 24" fill="#f9ab00"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93v-5.93h4v-2h-4V8.07c2.84.48 5 2.94 5 5.93s-2.16 5.45-5 5.93z"/></svg>
+    </div>
+    <div class="card-info">
+      <div class="card-label">去斗兽场 · 15:45 入场</div>
+      <div class="card-sub">Klook 已购联票</div>
+    </div>
+  </div>
+  <div class="card-content">
+
+    <div class="step">
+      <div class="step-marker"><div class="step-time">14:30</div><div class="step-line"></div></div>
+      <div class="step-body">
+        <div class="step-title">去斗兽场</div>
+        <div class="step-desc">
+          地铁：Ottaviano → Termini 换 B 线 → Colosseo，约 25min<br>
+          打车：约 15min €12-15（推荐，节省体力）
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-marker"><div class="step-time">15:45</div></div>
+      <div class="step-body">
+        <div class="step-title">斗兽场 + 古罗马广场 + 帕拉蒂尼山</div>
+        <div class="step-desc">
+          Klook 电子票，联票含 3 个景点，约 2-3h
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== 贴士 ===== -->
+<div class="card">
+  <div class="card-header">
+    <div class="card-icon" style="background:#e8f0fe">
+      <svg viewBox="0 0 24 24" fill="#1a73e8"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+    </div>
+    <div class="card-info">
+      <div class="card-label">当天贴士</div>
+    </div>
+  </div>
+  <div class="card-content" style="padding:8px 20px 16px">
+    <ul style="list-style:none;padding:0;font-size:13px;line-height:1.8;color:#5f6368">
+      <li>• <strong style="color:#202124">教堂着装：</strong>过肩过膝，薄围巾可临时遮肩</li>
+      <li>• <strong style="color:#202124">地铁票：</strong>买 Roma 24h 票 €7，当天随便坐</li>
+      <li>• <strong style="color:#202124">防扒手：</strong>梵蒂冈和地铁区域是罗马扒手重灾区，背包前背</li>
+      <li>• <strong style="color:#202124">早餐：</strong>Borgo Pio 街的 bar 早 7 点后营业，咖啡 + 牛角包 €4-5</li>
+      <li>• <strong style="color:#202124">水瓶：</strong>罗马街头有免费饮水点（Nasoni），空瓶带着能接水</li>
+      <li>• <strong style="color:#202124">体力分配：</strong>这天步数约 2-3 万，穿最舒服的鞋</li>
+    </ul>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">返回 <a href="javascript:history.back()">行程总览</a></div>
+
+</body>
+</html>
